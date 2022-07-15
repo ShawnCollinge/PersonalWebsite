@@ -26,6 +26,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+const about = {
+  title: "Welcome to my personal website",
+  body: "I am a computer science student attending Shoreline Community college. This is my website to show off projects I've worked on and explain a little about myself"
+};
+
 
 mongoose.connect("mongodb://localhost:27017/userDB");
 
@@ -44,7 +49,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.get("/", function(req, res) {
-  res.render("home");
+  res.render("home", {about: about});
 });
 
 app.listen(3000, function() {
