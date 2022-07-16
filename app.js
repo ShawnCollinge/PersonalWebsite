@@ -74,14 +74,20 @@ app.get("/", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-        res.render("home", {featureProjects: posts, about: aboutContent});
+        res.render("home", {featureProjects: posts, about: aboutContent, isAdmin: req.isAuthenticated()});
     }
-  })
+  });
 });
 
-app.get("/login", function(req, res) {
-  res.render("login");
-});
+app.get("/projects", function(req, res){
+  Project.find({}, function(err, posts) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("projects", {projects: posts, isAdmin: req.isAuthenticated()});
+    }
+  });
+})
 
 app.get("/logout", function(req, res) {
   req.logout(function(err) {
@@ -90,13 +96,19 @@ app.get("/logout", function(req, res) {
   res.redirect("/");
 });
 
-app.get("/register", function(req, res) {
-  res.render("register");
+// app.get("/register", function(req, res) {
+//   res.render("register");
+// });
+
+//admin pages
+
+app.get("/login", function(req, res) {
+  res.render("login", { isAdmin: req.isAuthenticated() });
 });
 
 app.get("/admin", function(req, res) {
   if (req.isAuthenticated()) {
-    res.render("admin");
+    res.render("admin", {isAdmin: req.isAuthenticated()});
   } else {
     res.redirect("/login");
   }
@@ -104,7 +116,7 @@ app.get("/admin", function(req, res) {
 
 app.get("/admin/newproject", function(req, res) {
   if (req.isAuthenticated()) {
-    res.render("newProject");
+    res.render("newProject", { isAdmin: req.isAuthenticated() });
   } else {
     res.redirect("/login");
   }
@@ -122,7 +134,7 @@ app.post("/admin/newproject", upload.array('images', 12), function(req, res) {
       isFeatured: req.body.isFeatured
     });
     project.save();
-    res.render("newProject");
+    res.redirect("newProject");
   } else {
     res.redirect("/login");
   }

@@ -17,52 +17,51 @@
             Shawn Collinge
           </a>
           <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBar">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarsExample04">
+            <div class="collapse navbar-collapse" id="navBar">
               <ul class="navbar-nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                 <li class="nav-item">
-                  <a href="/" class="nav-link text-secondary">
-                    <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                      <use xlink:href="#home" />
-                    </svg>
+                  <a href="/" class="nav-link text-white">
                     Home
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link text-white">
-                    <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                    </svg>
+                  <a href="/projects" class="nav-link text-white">
                     Projects
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link text-white">
-                    <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                    </svg>
+                  <a href="/contact" class="nav-link text-white">
                     Contact
                   </a>
                 </li>
+              </ul>
+                <% if (isAdmin) { %>
 
+                  <div class="dropdown text-end">
+                            <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                              <img src="uploads/72178760.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
+                            </a>
+                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser">
+                              <li><a class="dropdown-item" href="/admin/newProject">New project...</a></li>
+                              <li><a class="dropdown-item" href="/admin">Admin panel</a></li>
+                              <li><a class="dropdown-item" href="/admin/settings">Profile settings</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                            </ul>
+                          </div>
+
+
+                <% } %>
               </ul>
             </div>
           </nav>
         </div>
       </div>
     </div>
-    <!-- <div class="px-3 py-2 border-bottom mb-3">
-      <div class="container d-flex flex-wrap justify-content-center">
-        <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
-          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-        </form>
 
-        <div class="text-end">
-          <button type="button" class="btn btn-light text-dark me-2">Login</button>
-          <button type="button" class="btn btn-primary">Sign-up</button>
-        </div>
-      </div>
-    </div> -->
   </header>
 
 
