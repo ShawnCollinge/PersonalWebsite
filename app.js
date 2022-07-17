@@ -268,19 +268,19 @@ app.post("/admin/delimage/:projectID/:imageIndex", function(req, res) {
       if (err) {
         console.log(err);
       } else {
-      post.images.splice(req.params.imageIndex, 1);
-      Project.updateOne({
-          _id: req.params.projectID
-        }, {
-          images: post.images
-        },
-        function(err) {
-          if (!err) {
-            res.redirect(req.header('Referer'));
-          } else {
-            res.send(err);
-          }
-        });
+        post.images.splice(req.params.imageIndex, 1);
+        Project.updateOne({
+            _id: req.params.projectID
+          }, {
+            images: post.images
+          },
+          function(err) {
+            if (!err) {
+              res.redirect(req.header('Referer'));
+            } else {
+              res.send(err);
+            }
+          });
       }
     });
   } else {

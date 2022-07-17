@@ -1,26 +1,26 @@
 <%- include("partials/header") -%>
 
 <div class="p-5 mb-4 bg-light rounded-3">
-   <div class="container-fluid py-5">
-     <h1 class="display-5 fw-bold"><%= about.title %></h1>
-     <p class="col-md-8 fs-4"><%= about.body %>
-   </div>
- </div>
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold"><%= about.title %></h1>
+    <p class="col-md-8 fs-4"><%= about.body %>
+  </div>
+</div>
 
 <div class="album py-5 bg-light">
   <div class="container">
     <h1 class="display-5 fw-bold">Featured projects</h1>
     <div class="row">
-    <% featureProjects.forEach(function(project) { %>
+      <% featureProjects.forEach(function(project) { %>
       <div class="col-lg-4 col-md-6">
         <div class="card mb-4 box-shadow">
           <a href="/projects/<%=project.id%>">
-          <img class="card-img-top img-thumbnail" src="<%=project.images[0].path%>" alt="Card image cap">
+            <img class="card-img-top img-thumbnail" src="<%=project.images[0].path%>" alt="Card image cap">
           </a>
           <div class="card-body">
             <h4>
-                <%= project.title %>
-              </h4>
+              <%= project.title %>
+            </h4>
             <p class="card-text"> <%=project.techStacks%> </p>
 
             <div class="d-flex justify-content-between align-items-center">
@@ -28,15 +28,15 @@
                 <button onclick="location.href='<%=project.githubLink%>'" type="button" class="btn btn-sm btn-outline-secondary">Github</button>
                 <button type="button" onclick="location.href='<%=project.demoLink%>'" class="btn btn-sm btn-outline-secondary<% if (!project.demoLink) { %> disabled<% } %>">Demo</button>
                 <button type="button" onclick="location.href='/projects/<%=project.id%>'" class="btn btn-sm btn-outline-secondary">More info</button>
-                </div>
-                <% if (isAdmin) { %>
-                  <div class="btn-group">
-                  <button type="button" onclick="location.href='/admin/edit/<%=project.id%>'" class="btn btn-sm btn-primary">Edit</button>
-                      <form action="/admin/delete/<%=project.id%>" method="post" >
+              </div>
+              <% if (isAdmin) { %>
+              <div class="btn-group">
+                <button type="button" onclick="location.href='/admin/edit/<%=project.id%>'" class="btn btn-sm btn-primary">Edit</button>
+                <form action="/admin/delete/<%=project.id%>" method="post">
                   <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                      </form>
-                  </div>
-                <% } %>
+                </form>
+              </div>
+              <% } %>
             </div>
           </div>
         </div>

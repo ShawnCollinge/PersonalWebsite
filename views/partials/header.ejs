@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="utf-8">
   <title>Shawns website</title>
@@ -15,7 +16,7 @@
           <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
             Shawn Collinge
           </a>
-          <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBar">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,20 +33,22 @@
                   </a>
                 </li>
               </ul>
-                <% if (isAdmin) { %>
-                  <div class="dropdown text-end">
-                            <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-                              <img src="/uploads/72178760.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
-                            </a>
-                            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser">
-                              <li><a class="dropdown-item" href="/admin/newProject">New project...</a></li>
-                              <li><a class="dropdown-item" href="/admin">Admin panel</a></li>
-                              <li><a class="dropdown-item" href="/admin/settings">Profile settings</a></li>
-                              <li><hr class="dropdown-divider"></li>
-                              <li><a class="dropdown-item" href="/logout">Sign out</a></li>
-                            </ul>
-                          </div>
-                <% } %>
+              <% if (isAdmin) { %>
+              <div class="dropdown text-end">
+                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="/uploads/72178760.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser">
+                  <li><a class="dropdown-item" href="/admin/newProject">New project...</a></li>
+                  <li><a class="dropdown-item" href="/admin">Admin panel</a></li>
+                  <li><a class="dropdown-item" href="/admin/settings">Profile settings</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                </ul>
+              </div>
+              <% } %>
               </ul>
             </div>
           </nav>
@@ -54,5 +57,6 @@
     </div>
   </header>
 </head>
+
 <body>
   <div class="container">
