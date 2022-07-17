@@ -1,0 +1,45 @@
+<%- include("partials/header") -%>
+
+
+<div class="container">
+  <h1 class="display-5 fw-bold project-title"><%=project.title%></h1>
+
+      <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <% for (var i = 0; i < project.images.length; i++) {%>
+          <div class="carousel-item <% if (i === 0) {%>active<%}%>">
+            <img src="/<%=project.images[i].path%>" class="d-block w-100" alt="<%project.images[i].filename%>">
+          </div>
+          <%}%>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+<br>
+<div class="card">
+  <h5 class="card-header">Description</h5>
+
+  <div class="card-body">
+    <p class="card-text"><%=project.description%></p>
+    <div class="btn-group">
+      <a href="<%=project.githubLink%>" class="btn btn-sm btn-outline-secondary">Github</a>
+      <a href="<%=project.demoLink%>" class="btn btn-sm btn-outline-secondary<% if (!project.demoLink) { %> disabled<%}%>">Demo</a>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<%- include("partials/footer") -%>

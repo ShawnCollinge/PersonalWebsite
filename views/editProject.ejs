@@ -1,0 +1,64 @@
+<%- include("partials/header") -%>
+<%- include("partials/adminheader") -%>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Edit project</h1>
+  </div>
+  <form action="/admin/edit/<%=project.id%>" method="post" enctype="multipart/form-data">
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="title">Title</span>
+      <input type="text" class="form-control" name="title" value="<%=project.title%>">
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="githubLink">github link</span>
+      <input type="text" class="form-control" name="githubLink" value="<%=project.githubLink%>">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="techStacks">Tech Stacks</span>
+      <input type="text" class="form-control" name="techStacks" value="<%=project.techStacks%>">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="demoLink">Demo link</span>
+      <input type="text" class="form-control" name="demoLink" value="<%=project.demoLink%>">
+    </div>
+    <div class="input-group">
+      <span class="input-group-text">Main description</span>
+      <textarea rows="6" class="form-control" name="description"><%=project.description%></textarea>
+
+    </div>
+    <div class="album py-5 bg-light">
+        <div class="row">
+        <% for (var i = 0; i < project.images.length; i++) { %>
+          <div class="col-lg-4 col-md-6">
+            <div class="card mb-4 box-shadow">
+              <img class="card-img-top img-thumbnail" src="/<%=project.images[i].path%>" alt="Card image cap">
+              <div class="card-body">
+                <a href="/admin/deleteImage/<%=project.id%>/<%=i%>" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div><%}%>
+        </div>
+      </div>
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="images">Image</label>
+      <input type="file" class="form-control" name="images" multiple>
+    </div>
+    <div class="form-check">
+      <label class="form-check-label" for="isFeatured">
+        Featured Project
+      </label>
+      <input class="form-check-input" type="checkbox" value="true" name="isFeatured" <% if (project.isFeatured) { %> checked<%}%>>
+    </div>
+    <br>
+
+    <button type="submit" class="btn btn-primary" value="Upload">Update</button>
+    <a href="delete" class="btn btn-danger">Delete</a>
+  </form>
+
+
+</main>
+
+</div>
+</div>
+<%- include("partials/footer") -%>
