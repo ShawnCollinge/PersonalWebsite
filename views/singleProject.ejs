@@ -28,7 +28,7 @@
   <div class="card-body">
     <p class="card-text"><%=project.description%></p>
       <div class="btn-group">
-        <a href="<%=project.githubLink%>" class="btn btn-sm btn-outline-secondary">Github</a>
+        <a href="<%=project.githubLink%>" target="_blank" class="btn btn-sm btn-outline-secondary">Github</a>
         <a href="<%=project.demoLink%>" class="btn btn-sm btn-outline-secondary<% if (!project.demoLink) { %> disabled<%}%>">Demo</a>
       </div>
 
