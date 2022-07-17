@@ -17,14 +17,14 @@ const storage = multer.diskStorage({
   filename: function(req, file, cb) {
     cb(null, file.originalname)
   }
-})
+});
 const upload = multer({
   storage: storage
-})
+});
 
 
 app.use(express.static("public"));
-app.use('/uploads', express.static('uploads'))
+app.use('/uploads', express.static('uploads'));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({
@@ -45,8 +45,7 @@ mongoose.connect(process.env.MONGO_URL);
 const userSchema = new mongoose.Schema({
   username: String,
   password: String,
-  aboutTitle: String,
-  aboutBody: String
+  resume: Array
 });
 
 const projectSchema = new mongoose.Schema({
