@@ -117,10 +117,15 @@ app.get("/projects/:projectID", function(req, res) {
   });
 });
 
+app.get("/contact", function(req, res) {
+  res.render("contact", {
+    isAdmin: req.isAuthenticated()
+  });
+});
+
 // app.get("/register", function(req, res) {
 //   res.render("register");
 // });
-
 
 
 //////// admin pages
@@ -194,21 +199,20 @@ app.post("/admin/newproject", upload.array("images", 12), function(req, res) {
   }
 });
 
-app.post("/register", function(req, res) {
-
-  User.register({
-    username: req.body.username
-  }, req.body.password, function(err, user) {
-    if (err) {
-      console.log(err);
-      res.redirect("/register");
-    } else {
-      passport.authenticate("local")(req, res, function() {
-        res.redirect("/admin");
-      });
-    }
-  });
-});
+// app.post("/register", function(req, res) {
+//   User.register({
+//     username: req.body.username
+//   }, req.body.password, function(err, user) {
+//     if (err) {
+//       console.log(err);
+//       res.redirect("/register");
+//     } else {
+//       passport.authenticate("local")(req, res, function() {
+//         res.redirect("/admin");
+//       });
+//     }
+//   });
+// });
 
 app.post("/admin/edit/:projectID", upload.array("images", 12), function(req, res) {
   if (req.isAuthenticated()) {
@@ -242,7 +246,9 @@ app.post("/admin/edit/:projectID", upload.array("images", 12), function(req, res
 });
 
 app.post("/admin/delete/:projectID", function(req, res) {
-  Project.deleteOne({id: req.params.projectID}, function(err) {
+  Project.deleteOne({
+    id: req.params.projectID
+  }, function(err) {
     if (!err) {
       res.redirect(req.header('Referer'));
     } else {
