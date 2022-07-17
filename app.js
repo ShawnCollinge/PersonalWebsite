@@ -246,17 +246,48 @@ app.post("/admin/edit/:projectID", upload.array("images", 12), function(req, res
 });
 
 app.post("/admin/delete/:projectID", function(req, res) {
-  Project.deleteOne({
-    id: req.params.projectID
-  }, function(err) {
-    if (!err) {
-      res.redirect(req.header('Referer'));
-    } else {
-      res.send(err);
-    }
-  });
+  if (req.isAuthenticated()) {
+    Project.deleteOne({
+      id: req.params.projectID
+    }, function(err) {
+      if (!err) {
+        res.redirect(req.header('Referer'));
+      } else {
+        res.send(err);
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
 });
 
+app.post("/admin/delimage/:projectID/:imageIndex", function(req, res) {
+  if (req.isAuthenticated()) {
+    Project.findOne({
+      id: req.params.projectID
+    }, function(err, post) {
+      if (err) {
+        console.log(err);
+      } else {
+      post.images.splice(req.params.imageIndex, 1);
+      Project.updateOne({
+          id: req.params.projectID
+        }, {
+          images: post.images
+        },
+        function(err) {
+          if (!err) {
+            res.redirect(req.header('Referer'));
+          } else {
+            res.send(err);
+          }
+        });
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
 
 
 

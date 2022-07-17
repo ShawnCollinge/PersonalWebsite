@@ -25,19 +25,20 @@
     <div class="input-group">
       <span class="input-group-text">Main description</span>
       <textarea rows="6" class="form-control" name="description"><%=project.description%></textarea>
-
     </div>
     <div class="album py-5 bg-light">
-        <div class="row">
+      <div class="row">
         <% for (var i = 0; i < project.images.length; i++) { %>
-          <div class="col-lg-4 col-md-6">
-            <div class="card mb-4 box-shadow">
-              <img class="card-img-top img-thumbnail" src="/<%=project.images[i].path%>" alt="Card image cap">
-              <div class="card-body">
-                <a href="/admin/deleteImage/<%=project.id%>/<%=i%>" class="btn btn-danger">Delete</a>
-              </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="card mb-4 box-shadow">
+            <img class="card-img-top img-thumbnail" src="/<%=project.images[i].path%>">
+            <div class="card-body">
+              <form action="/admin/delimage/<%=project.id%>/<%=i%>" method="post" id="imageDelete">
+                <button type="submit" form="imageDelete" class="btn btn-sm btn-danger">Delete</button>
+              </form>
             </div>
-          </div><%}%>
+          </div>
+        </div><%}%>
         </div>
       </div>
     <div class="input-group mb-3">
