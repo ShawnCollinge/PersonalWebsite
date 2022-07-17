@@ -216,11 +216,11 @@ app.post("/admin/newproject", upload.array("images", 12), function(req, res) {
 app.post("/admin/edit/:projectID", upload.array("images", 12), function(req, res) {
   if (req.isAuthenticated()) {
     Project.findOne({
-      id: req.params.projectID
+      _id: req.params.projectID
     }, function(err, post) {
       let images = post.images.concat(req.files);
       Project.replaceOne({
-          id: req.params.projectID
+          _id: req.params.projectID
         }, {
           title: req.body.title,
           githubLink: req.body.githubLink,
@@ -247,7 +247,7 @@ app.post("/admin/edit/:projectID", upload.array("images", 12), function(req, res
 app.post("/admin/delete/:projectID", function(req, res) {
   if (req.isAuthenticated()) {
     Project.deleteOne({
-      id: req.params.projectID
+      _id: req.params.projectID
     }, function(err) {
       if (!err) {
         res.redirect(req.header('Referer'));
@@ -263,14 +263,14 @@ app.post("/admin/delete/:projectID", function(req, res) {
 app.post("/admin/delimage/:projectID/:imageIndex", function(req, res) {
   if (req.isAuthenticated()) {
     Project.findOne({
-      id: req.params.projectID
+      _id: req.params.projectID
     }, function(err, post) {
       if (err) {
         console.log(err);
       } else {
       post.images.splice(req.params.imageIndex, 1);
       Project.updateOne({
-          id: req.params.projectID
+          _id: req.params.projectID
         }, {
           images: post.images
         },
