@@ -124,7 +124,7 @@ app.get("/contact", function(req, res) {
 });
 
 // app.get("/register", function(req, res) {
-//   res.render("register");
+//   res.render("register", {isAdmin: req.isAuthenticated()});
 // });
 
 
