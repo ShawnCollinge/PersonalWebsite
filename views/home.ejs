@@ -14,7 +14,9 @@
     <% featureProjects.forEach(function(project) { %>
       <div class="col-lg-4 col-md-6">
         <div class="card mb-4 box-shadow">
+          <a href="/projects/<%=project%>">
           <img class="card-img-top img-thumbnail" src="<%=project.images[0].path%>" alt="Card image cap">
+          </a>
           <div class="card-body">
             <h4>
                 <%= project.title %>
