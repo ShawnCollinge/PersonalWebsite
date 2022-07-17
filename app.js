@@ -69,8 +69,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 const aboutContent = {
-  title: "test",
-  body: "test"
+  title: "Welcome to my website",
+  body: "This is my personal website that showcases my projects I've been working on."
 }
 
 app.get("/", function(req, res) {
