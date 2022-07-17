@@ -37,10 +37,13 @@
       <input class="form-check-input" type="checkbox" value="true" name="isFeatured" <% if (project.isFeatured) { %> checked<%}%>>
     </div>
     <br>
-
+<div class="btn-group">
     <button type="submit" class="btn btn-primary" value="Upload">Update</button>
-    <a href="delete" class="btn btn-danger">Delete</a>
   </form>
+  <form action="/admin/delete/<%=project.id%>" method="post">
+      <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+  </div>
   <div class="album py-5 bg-light">
     <div class="row">
       <% for (var i = 0; i < project.images.length; i++) { %>
@@ -48,8 +51,8 @@
         <div class="card mb-4 box-shadow">
           <img class="card-img-top img-thumbnail" src="/<%=project.images[i].path%>">
           <div class="card-body">
-            <form action="/admin/delimage/<%=project.id%>/<%=i%>" method="post" id="imageDelete">
-              <button type="submit" form="imageDelete" class="btn btn-sm btn-danger">Delete</button>
+            <form action="/admin/delimage/<%=project.id%>/<%=i%>" method="post">
+              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
             </form>
           </div>
         </div>
