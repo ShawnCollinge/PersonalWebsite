@@ -19,7 +19,7 @@
               <div class="btn-group">
                 <a href="<%=projects[i].githubLink%>" class="btn btn-sm btn-outline-secondary">Github</a>
                 <a href="<%=projects[i].demoLink%>" class="btn btn-sm btn-outline-secondary<% if (!projects[i].demoLink) { %> disabled<% } %>">Demo</a>
-                <a href="location.href='/projects/<%=projects[i].id%>" class="btn btn-sm btn-outline-secondary">More info</a>
+                <a href="/projects/<%=projects[i].id%>" class="btn btn-sm btn-outline-secondary">More info</a>
               </div>
               <% if (isAdmin) { %>
               <div class="btn-group">
