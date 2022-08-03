@@ -58,7 +58,7 @@ const projectSchema = new mongoose.Schema({
   isFeatured: Boolean
 });
 
-const userSchema = new mongoose.Schema({
+const discordSchema = new mongoose.Schema({
     username: String,
     city: String,
     pronouns: String,
@@ -77,7 +77,7 @@ userSchema.plugin(passportLocalMongoose);
 
 const User = new mongoose.model("User", userSchema);
 const Project = new mongoose.model("Project", projectSchema);
-const DiscordUser = new mongoose.model("DiscordUser", userSchema);
+const DiscordUser = new mongoose.model("DiscordUser", discordSchema);
 const ShortURL = new mongoose.model("ShortURL", shortSchema);
 
 passport.use(User.createStrategy());
