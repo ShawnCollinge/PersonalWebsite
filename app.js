@@ -386,6 +386,7 @@ app.route("/api/:api_key")
       } else if (type == "short") {
         const base = process.env.BASE
         data['_id'] = makeid(7);
+        data['url'] = data.url.replace(/^https?:\/\//, '')
         new_link = new ShortURL(data);
         new_link.save(function(err) {
           if (!err) {
