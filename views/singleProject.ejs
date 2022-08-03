@@ -4,7 +4,7 @@
 <div class="container">
   <h1 class="display-5 fw-bold project-title"><%=project.title%></h1>
 
-  <div id="carousel" class="carousel slide" data-interval="false" data-bs-ride="carousel">
+  <div id="carousel" class="carousel slide" data-bs-interval="false" data-bs-ride="carousel">
     <div class="carousel-inner">
       <% for (var i = 0; i < project.images.length; i++) {%>
       <div class="carousel-item <% if (i === 0) {%>active<%}%>">
