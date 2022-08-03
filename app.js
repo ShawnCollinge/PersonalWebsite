@@ -333,8 +333,7 @@ app.get("/s/:id", function(req, res) {
     if (err || data === null) {
       res.send(data);
     } else {
-      console.log(data)
-      res.redirect(data.url);
+      res.redirect("//" + data.url);
     }
   });
 });
