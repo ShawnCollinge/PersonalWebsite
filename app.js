@@ -58,10 +58,27 @@ const projectSchema = new mongoose.Schema({
   isFeatured: Boolean
 });
 
+const userSchema = new mongoose.Schema({
+    username: String,
+    city: String,
+    pronouns: String,
+    admin: {
+        type: Boolean,
+        default: false
+    }
+});
+
+const shortSchema = new mongoose.Schema({
+    _id: String,
+    url: String,
+});
+
 userSchema.plugin(passportLocalMongoose);
 
 const User = new mongoose.model("User", userSchema);
 const Project = new mongoose.model("Project", projectSchema);
+const DiscordUser = new mongoose.model("DiscordUser", userSchema);
+const ShortURL = new mongoose.model("ShortURL", shortSchema);
 
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
@@ -307,7 +324,121 @@ app.post("/login", function(req, res) {
   });
 });
 
+// Discord bot api stuff
+
+app.get("/s/:id", function(req, res) {
+    ShortURL.findOne({ _id: req.params.id }, function (err, data) {
+        if (err || data === null) {
+            res.redirect("/");
+        } else {
+            console.log(data)
+            res.redirect(data.url);
+        }
+    });
+});
+
+app.route("/api/:api_key")
+
+    .get(function (req, res) {
+        if (req.params.api_key === process.env.API_KEY) {
+            if (req.body.type === "user") {
+                DiscordUser.findOne({ username: req.body.username }, function (err, user) {
+                    if (err || user == null) {
+                        res.sendStatus(404);
+                    } else {
+                        res.send(user);
+                    }
+                });
+            } else if (req.body.type === "shortener") {
+                ShortURL.findOne({ short: req.body.short }, function (err, link) {
+                    if (err || link === null) {
+                        res.sendStatus(404);
+                    } else {
+                        res.send(link);
+                    }
+                });
+            }
+        } else {
+            res.sendStatus(403);
+        }
+
+    })
+
+    .post(function (req, res) {
+        const type = req.body.type;
+        if (req.params.api_key === process.env.API_KEY) {
+            data = req.body;
+            delete data['type']
+            if (type == "user") {
+                new_user = new DiscordUser(data);
+                new_user.save(function (err) {
+                    if (!err) {
+                        res.sendStatus(200);
+                    } else {
+                        res.send(err);
+                    }
+                });
+            } else if (type == "short") {
+                const base = process.env.BASE
+                data['_id'] = makeid(7);
+                new_link = new ShortURL(data);
+                new_link.save(function (err) {
+                    if (!err) {
+                        res.send(base + data['_id']);
+                    } else {
+                        res.send(err);
+                    }
+                });
+            }
+        } else {
+            res.send(400);
+        }
+    })
+
+    .patch(function (req, res) {
+        if (req.params.api_key === process.env.API_KEY) {
+            DiscordUser.updateOne({ username: req.body.username },
+                req.body, function (err, results) {
+                    if (!err) {
+                        res.sendStatus(200);
+                    } else {
+                        res.sendStatus(400);
+                    }
+                }
+            )
+        } else {
+            res.sendStatus(403);
+        }
+    })
+
+    .delete(function (req, res) {
+        if (req.params.api_key === process.env.API_KEY) {
+            DiscordUser.deleteOne({ username: req.body.username }, function (err, status) {
+                if (!err && status.deletedCount == 1) {
+                    res.sendStatus(200);
+                } else {
+                    res.sendStatus(400);
+                }
+            })
+        } else {
+            res.sendStatus(404);
+        }
+    });
+
+
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
 });
+
+
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+}
