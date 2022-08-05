@@ -11,10 +11,10 @@ const multer = require('multer')
 const app = express();
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     cb(null, './uploads')
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, file.originalname)
   }
 });
@@ -58,8 +58,8 @@ const projectSchema = new mongoose.Schema({
   isFeatured: Boolean
 });
 
-const discordSchema = new mongoose.Schema({
-  username: String,
+const discordUserSchema = new mongoose.Schema({
+  _id: String,
   city: String,
   pronouns: String,
   admin: {
@@ -73,12 +73,30 @@ const shortSchema = new mongoose.Schema({
   url: String,
 });
 
+const discordServerSchema = new mongoose.Schema({
+  _id: String,
+  joinChannel: String,
+  leaveChannel: String,
+  rulesChannel: String,
+  announceChannel: String,
+  isValid: {
+    type: Boolean,
+    default: true
+  }
+});
+
 userSchema.plugin(passportLocalMongoose);
 
 const User = new mongoose.model("User", userSchema);
 const Project = new mongoose.model("Project", projectSchema);
-const DiscordUser = new mongoose.model("DiscordUser", discordSchema);
+const DiscordUser = new mongoose.model("DiscordUser", discordUserSchema);
 const ShortURL = new mongoose.model("ShortURL", shortSchema);
+const DiscordServer = new mongoose.model("DiscordServer", discordServerSchema);
+
+const types = {
+  user: DiscordUser,
+  server: DiscordServer
+}
 
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
@@ -89,10 +107,10 @@ const aboutContent = {
   body: "This is my personal website that showcases my projects I've been working on."
 }
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   Project.find({
     isFeatured: true
-  }, function(err, posts) {
+  }, function (err, posts) {
     if (err) {
       console.log(err);
     } else {
@@ -105,8 +123,8 @@ app.get("/", function(req, res) {
   });
 });
 
-app.get("/projects", function(req, res) {
-  Project.find({}, function(err, posts) {
+app.get("/projects", function (req, res) {
+  Project.find({}, function (err, posts) {
     if (err) {
       console.log(err);
     } else {
@@ -118,10 +136,10 @@ app.get("/projects", function(req, res) {
   });
 });
 
-app.get("/projects/:projectID", function(req, res) {
+app.get("/projects/:projectID", function (req, res) {
   Project.findOne({
     _id: req.params.projectID
-  }, function(err, post) {
+  }, function (err, post) {
     if (err) {
       console.log(err);
     } else {
@@ -133,7 +151,7 @@ app.get("/projects/:projectID", function(req, res) {
   });
 });
 
-app.get("/contact", function(req, res) {
+app.get("/contact", function (req, res) {
   res.render("contact", {
     isAdmin: req.isAuthenticated()
   });
@@ -146,14 +164,14 @@ app.get("/contact", function(req, res) {
 
 //////// admin pages
 
-app.get("/login", function(req, res) {
+app.get("/login", function (req, res) {
   res.render("login", {
     isAdmin: req.isAuthenticated()
   });
 });
 
-app.get("/logout", function(req, res) {
-  req.logout(function(err) {
+app.get("/logout", function (req, res) {
+  req.logout(function (err) {
     if (err) {
       console.log(err)
     }
@@ -162,7 +180,7 @@ app.get("/logout", function(req, res) {
 });
 
 
-app.get("/admin", function(req, res) {
+app.get("/admin", function (req, res) {
   if (req.isAuthenticated()) {
     res.render("admin", {
       isAdmin: req.isAuthenticated()
@@ -172,7 +190,7 @@ app.get("/admin", function(req, res) {
   }
 });
 
-app.get("/admin/newproject", function(req, res) {
+app.get("/admin/newproject", function (req, res) {
   if (req.isAuthenticated()) {
     res.render("newProject", {
       isAdmin: req.isAuthenticated()
@@ -182,11 +200,11 @@ app.get("/admin/newproject", function(req, res) {
   }
 });
 
-app.get("/admin/edit/:projectID", function(req, res) {
+app.get("/admin/edit/:projectID", function (req, res) {
   if (req.isAuthenticated()) {
     Project.findOne({
       _id: req.params.projectID
-    }, function(err, post) {
+    }, function (err, post) {
       res.render("editProject", {
         isAdmin: req.isAuthenticated(),
         project: post
@@ -197,7 +215,7 @@ app.get("/admin/edit/:projectID", function(req, res) {
   }
 });
 
-app.post("/admin/newproject", upload.array("images", 12), function(req, res) {
+app.post("/admin/newproject", upload.array("images", 12), function (req, res) {
   if (req.isAuthenticated()) {
     const project = new Project({
       title: req.body.title,
@@ -230,24 +248,24 @@ app.post("/admin/newproject", upload.array("images", 12), function(req, res) {
 //   });
 // });
 
-app.post("/admin/edit/:projectID", upload.array("images", 12), function(req, res) {
+app.post("/admin/edit/:projectID", upload.array("images", 12), function (req, res) {
   if (req.isAuthenticated()) {
     Project.findOne({
       _id: req.params.projectID
-    }, function(err, post) {
+    }, function (err, post) {
       let images = post.images.concat(req.files);
       Project.replaceOne({
-          _id: req.params.projectID
-        }, {
-          title: req.body.title,
-          githubLink: req.body.githubLink,
-          techStacks: req.body.techStacks,
-          demoLink: req.body.demoLink,
-          description: req.body.description,
-          images: images,
-          isFeatured: req.body.isFeatured
-        },
-        function(err, results) {
+        _id: req.params.projectID
+      }, {
+        title: req.body.title,
+        githubLink: req.body.githubLink,
+        techStacks: req.body.techStacks,
+        demoLink: req.body.demoLink,
+        description: req.body.description,
+        images: images,
+        isFeatured: req.body.isFeatured
+      },
+        function (err, results) {
           if (!err) {
             res.redirect("/admin");
           } else {
@@ -261,11 +279,11 @@ app.post("/admin/edit/:projectID", upload.array("images", 12), function(req, res
   }
 });
 
-app.post("/admin/delete/:projectID", function(req, res) {
+app.post("/admin/delete/:projectID", function (req, res) {
   if (req.isAuthenticated()) {
     Project.deleteOne({
       _id: req.params.projectID
-    }, function(err) {
+    }, function (err) {
       if (!err) {
         res.redirect(req.header('Referer'));
       } else {
@@ -277,21 +295,21 @@ app.post("/admin/delete/:projectID", function(req, res) {
   }
 });
 
-app.post("/admin/delimage/:projectID/:imageIndex", function(req, res) {
+app.post("/admin/delimage/:projectID/:imageIndex", function (req, res) {
   if (req.isAuthenticated()) {
     Project.findOne({
       _id: req.params.projectID
-    }, function(err, post) {
+    }, function (err, post) {
       if (err) {
         console.log(err);
       } else {
         post.images.splice(req.params.imageIndex, 1);
         Project.updateOne({
-            _id: req.params.projectID
-          }, {
-            images: post.images
-          },
-          function(err) {
+          _id: req.params.projectID
+        }, {
+          images: post.images
+        },
+          function (err) {
             if (!err) {
               res.redirect(req.header('Referer'));
             } else {
@@ -307,17 +325,17 @@ app.post("/admin/delimage/:projectID/:imageIndex", function(req, res) {
 
 
 
-app.post("/login", function(req, res) {
+app.post("/login", function (req, res) {
   const user = new User({
     username: req.body.username,
     password: req.body.password
   });
 
-  req.login(user, function(err) {
+  req.login(user, function (err) {
     if (err) {
       console.log(err);
     } else {
-      passport.authenticate("local")(req, res, function() {
+      passport.authenticate("local")(req, res, function () {
         res.redirect("/admin");
       });
     }
@@ -326,10 +344,10 @@ app.post("/login", function(req, res) {
 
 // Discord bot api stuff
 
-app.get("/s/:id", function(req, res) {
+app.get("/s/:id", function (req, res) {
   ShortURL.findOne({
     _id: req.params.id
-  }, function(err, data) {
+  }, function (err, data) {
     if (err || data === null) {
       res.send(data);
     } else {
@@ -340,28 +358,33 @@ app.get("/s/:id", function(req, res) {
 
 app.route("/api/:api_key")
 
-  .get(function(req, res) {
+  .get(function (req, res) {
     if (req.params.api_key === process.env.API_KEY) {
-      if (req.body.type === "user") {
-        DiscordUser.findOne({
-          username: req.body.username
-        }, function(err, user) {
-          if (err || user == null) {
-            res.sendStatus(404);
-          } else {
-            res.send(user);
-          }
-        });
-      } else if (req.body.type === "shortener") {
+      const type = req.body.type;
+      const data = req.body;
+      delete data['type'];
+      console.log(types[type]);
+      if (type === "short") {
         ShortURL.findOne({
           short: req.body.short
-        }, function(err, link) {
+        }, function (err, link) {
           if (err || link === null) {
             res.sendStatus(404);
           } else {
             res.send(link);
           }
         });
+      } else if (types.hasOwnProperty(type)) {
+        const obj = types[type]
+        obj.findOne({
+          _id: req.body._id
+        }, function (err, returnData) {
+          if (err || returnData == null) {
+            res.sendStatus(404);
+          } else {
+            res.send(returnData);
+          }
+        });
       }
     } else {
       res.sendStatus(403);
@@ -369,62 +392,72 @@ app.route("/api/:api_key")
 
   })
 
-  .post(function(req, res) {
+  .post(function (req, res) {
     const type = req.body.type;
+    data = req.body;
+    delete data['type'];
     if (req.params.api_key === process.env.API_KEY) {
-      data = req.body;
-      delete data['type']
-      if (type == "user") {
-        new_user = new DiscordUser(data);
-        new_user.save(function(err) {
-          if (!err) {
-            res.sendStatus(200);
-          } else {
-            res.send(err);
-          }
-        });
-      } else if (type == "short") {
-        const base = process.env.BASE
+      if (type == "short") {
+        const base = process.env.BASE;
         data['_id'] = makeid(7);
         data['url'] = data.url.replace(/^https?:\/\//, '')
         new_link = new ShortURL(data);
-        new_link.save(function(err) {
+        new_link.save(function (err) {
           if (!err) {
             res.send(base + data['_id']);
           } else {
             res.send(err);
           }
         });
-      }
-    } else {
-      res.send(400);
-    }
-  })
-
-  .patch(function(req, res) {
-    if (req.params.api_key === process.env.API_KEY) {
-      DiscordUser.updateOne({
-          username: req.body.username
-        },
-        req.body,
-        function(err, results) {
+      } else if (types.hasOwnProperty(type)) {
+        new_user = new types[type](data);
+        new_user.save(function (err) {
           if (!err) {
             res.sendStatus(200);
           } else {
-            res.sendStatus(400);
+            res.send(err);
           }
-        }
-      )
+        });
+      } else {
+        res.sendStatus(400);
+      }
+    } else {
+      res.sendStatus(400);
+    }
+  })
+
+  .patch(function (req, res) {
+    if (req.params.api_key === process.env.API_KEY) {
+      const type = req.body.type;
+      data = req.body;
+      delete data['type'];
+      if (types.hasOwnProperty(type)) {
+        const obj = types[type];
+        obj.updateOne({
+          _id: req.body._id
+        },
+          data,
+          function (err, results) {
+            if (!err) {
+              res.sendStatus(200);
+            } else {
+              res.sendStatus(400);
+            }
+          }
+        );
+      } else {
+        res.sendStatus(400);
+      }
     } else {
       res.sendStatus(403);
     }
   })
 
-  .delete(function(req, res) {
+  .delete(function (req, res) {
     if (req.params.api_key === process.env.API_KEY) {
       DiscordUser.deleteOne({
-        username: req.body.username
-      }, function(err, status) {
+        _id: req.body._id
+      }, function (err, status) {
         if (!err && status.deletedCount == 1) {
           res.sendStatus(200);
         } else {
@@ -438,7 +471,7 @@ app.route("/api/:api_key")
 
 
 
-app.listen(3000, function() {
+app.listen(3000, function () {
   console.log("Server started on port 3000");
 });
 
