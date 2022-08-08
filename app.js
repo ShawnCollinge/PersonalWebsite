@@ -363,7 +363,6 @@ app.route("/api/:api_key")
       const type = req.body.type;
       const data = req.body;
       delete data['type'];
-      console.log(types[type]);
       if (type === "short") {
         ShortURL.findOne({
           short: req.body.short
