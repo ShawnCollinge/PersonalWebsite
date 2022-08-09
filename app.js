@@ -364,15 +364,13 @@ app.get("/practiscore", function (req, res) {
 });
 
 app.post("/practiscore", function (req, res) {
-  
   let options = {
     mode: 'text',
-    pythonOptions: ['-u'], // get print results in real-time
+    pythonOptions: ['-u'], 
     args: [req.body.url, req.body.firstName, req.body.lastName]
   };
   PythonShell.run('main.py', options, function (err, results) {
     if (err) throw err;
-    // results is an array consisting of messages collected during execution
     results.forEach(function (item) {
       res.write(item + "\n")
     });
