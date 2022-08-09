@@ -74,15 +74,14 @@ stages = stagesParent.findChildren("h3")
 
 driver.close()
 
-for i in range(len(stages)):
-    stageName = stages[i]
+for i in range(round(len(divisionResults)/2)):
     startingPoint = results[i].find_next("td")
     video = startingPoint.find_next("td")
     place = video.find_next("td")
     percent = place.find_next("td")
 
-    divisionStartingPoint = divisionResults[i].find_next("span")
-    divisionPlace = divisionStartingPoint.find_next("td").find_next("td")
+    stageName = divisionResults[i].find_next("span")
+    divisionPlace = stageName.find_next("td").find_next("td")
     divisionPercent = divisionPlace.find_next("td")
     divisionPoints = divisionPercent.find_next("td")
     hitFactor = divisionPoints.find_next("td").find_next("td")
