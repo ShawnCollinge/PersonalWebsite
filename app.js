@@ -370,7 +370,9 @@ app.post("/practiscore", function (req, res) {
     args: [req.body.url, req.body.firstName, req.body.lastName]
   };
   PythonShell.run('main.py', options, function (err, results) {
-    if (err) throw err;
+    if (err) {
+      res.redirect("/practiscore")
+    }
     results.forEach(function (item) {
       res.write(item + "\n")
     });
