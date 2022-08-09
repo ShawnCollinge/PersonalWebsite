@@ -112,6 +112,8 @@ for i in range(len(stages)):
         divisionPlace = divisionPlace.split("-")[0]
 
     totalPoints = int(stageAlphas.getText()) * 5 + int(stageCharlies.getText()) * charliePoints + int(stageDeltas.getText()) * deltaPoints - int(stageMikes.getText()) * 10 - int(stageNS.getText()) * 10 - int(stageProc.getText()) * 10
+    if totalPoints < 0:
+        totalPoints = 0
 
     totalPointsPerStage = int(stageAlphas.getText()) + int(stageCharlies.getText()) + int(stageDeltas.getText()) + int(stageMikes.getText())
     totalPointsPerStage *= 5
