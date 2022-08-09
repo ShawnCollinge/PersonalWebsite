@@ -7,6 +7,7 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const multer = require('multer')
+let {PythonShell} = require('python-shell')
 
 const app = express();
 
@@ -353,6 +354,30 @@ app.get("/s/:id", function (req, res) {
     } else {
       res.redirect("//" + data.url);
     }
+  });
+});
+
+app.get("/practiscore", function (req, res) {
+  res.render("practiscore", {
+    isAdmin: req.isAuthenticated()
+  });
+});
+
+app.post("/practiscore", function (req, res) {
+  
+  let options = {
+    mode: 'text',
+    pythonOptions: ['-u'], // get print results in real-time
+    args: [req.body.url, req.body.firstName, req.body.lastName]
+  };
+  PythonShell.run('main.py', options, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    results.forEach(function (item) {
+      res.write(item + "\n")
+    });
+    res.send()
+
   });
 });
 
