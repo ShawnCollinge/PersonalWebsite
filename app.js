@@ -371,7 +371,7 @@ app.post("/practiscore", function (req, res) {
   };
   PythonShell.run('main.py', options, function (err, results) {
     if (err) {
-      res.render("/practiscore")
+      res.render("practiscore")
     } else {
     results.forEach(function (item) {
       res.write(item + "\n")
