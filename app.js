@@ -386,11 +386,11 @@ app.post("/practiscore", function (req, res) {
     if (err) {
       res.redirect("/practiscore")
     } else {
-    results.forEach(function (item) {
-      res.write(item + "\n")
-    });
     search.save()
-    res.send()
+    res.render("results", {
+      isAdmin: req.isAuthenticated(),
+      results: results
+    })
   }
   });
 });
