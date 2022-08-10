@@ -86,6 +86,12 @@ const discordServerSchema = new mongoose.Schema({
   }
 });
 
+const practiscoreSearchSchema = new mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  url: String
+})
+
 userSchema.plugin(passportLocalMongoose);
 
 const User = new mongoose.model("User", userSchema);
@@ -93,6 +99,7 @@ const Project = new mongoose.model("Project", projectSchema);
 const DiscordUser = new mongoose.model("DiscordUser", discordUserSchema);
 const ShortURL = new mongoose.model("ShortURL", shortSchema);
 const DiscordServer = new mongoose.model("DiscordServer", discordServerSchema);
+const PractiscoreSearch = new mongoose.model("PractiscoreSearch", practiscoreSearchSchema)
 
 const types = {
   user: DiscordUser,
@@ -364,10 +371,16 @@ app.get("/practiscore", function (req, res) {
 });
 
 app.post("/practiscore", function (req, res) {
+  const searchData = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    url: req.body.url
+  }
+  const search = new PractiscoreSearch(searchData);
   let options = {
     mode: 'text',
     pythonOptions: ['-u'], 
-    args: [req.body.url, req.body.firstName, req.body.lastName]
+    args: [searchData.url, searchData.firstName, searchData.lastName]
   };
   PythonShell.run('main.py', options, function (err, results) {
     if (err) {
@@ -376,6 +389,7 @@ app.post("/practiscore", function (req, res) {
     results.forEach(function (item) {
       res.write(item + "\n")
     });
+    search.save()
     res.send()
   }
   });
@@ -425,7 +439,7 @@ app.route("/api/:api_key")
         const base = process.env.BASE;
         data['_id'] = makeid(7);
         data['url'] = data.url.replace(/^https?:\/\//, '')
-        new_link = new ShortURL(data);
+        const new_link = new ShortURL(data);
         new_link.save(function (err) {
           if (!err) {
             res.send(base + data['_id']);
@@ -434,7 +448,7 @@ app.route("/api/:api_key")
           }
         });
       } else if (types.hasOwnProperty(type)) {
-        new_user = new types[type](data);
+        const new_user = new types[type](data);
         new_user.save(function (err) {
           if (!err) {
             res.sendStatus(200);
@@ -453,7 +467,7 @@ app.route("/api/:api_key")
   .patch(function (req, res) {
     if (req.params.api_key === process.env.API_KEY) {
       const type = req.body.type;
-      data = req.body;
+      const data = req.body;
       delete data['type'];
       if (types.hasOwnProperty(type)) {
         const obj = types[type];
