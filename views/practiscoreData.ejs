@@ -1,0 +1,40 @@
+<%- include("partials/header") -%>
+    <%- include("partials/adminheader") -%>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Practiscore Data</h1>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (var i=results.length - 1; i>= 0; i--) { %>
+                        <% if (i % 2==0) { %>
+                            <tr class="table-primary">
+                                <% } else { %>
+                            <tr class="table-secondary">
+                                <% } %>
+                                    <th scope="row">
+                                        <%=results[i].firstName%>
+                                    </th>
+                                    <td>
+                                        <%=results[i].lastName%>
+                                    </td>
+                                    <td><a href="<%=results[i].url%>">
+                                            <%=results[i].url%>
+                                        </a></td>
+                            </tr>
+                            <% } %>
+                </tbody>
+            </table>
+        </main>
+
+        </div>
+        </div>
+        <%- include("partials/footer") -%>

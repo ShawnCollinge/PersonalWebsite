@@ -7,7 +7,7 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const multer = require('multer')
-let {PythonShell} = require('python-shell')
+let { PythonShell } = require('python-shell')
 
 const app = express();
 
@@ -241,6 +241,23 @@ app.post("/admin/newproject", upload.array("images", 12), function (req, res) {
   }
 });
 
+app.get("/admin/practiscore", function (req, res) {
+  if (req.isAuthenticated()) {
+    PractiscoreSearch.find({}, function (err, posts) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("practiscoreData", {
+          results: posts,
+          isAdmin: req.isAuthenticated()
+        });
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+
 // app.post("/register", function(req, res) {
 //   User.register({
 //     username: req.body.username
@@ -379,19 +396,19 @@ app.post("/practiscore", function (req, res) {
   const search = new PractiscoreSearch(searchData);
   let options = {
     mode: 'text',
-    pythonOptions: ['-u'], 
+    pythonOptions: ['-u'],
     args: [searchData.url, searchData.firstName, searchData.lastName]
   };
   PythonShell.run('main.py', options, function (err, results) {
     if (err) {
       res.redirect("/practiscore")
     } else {
-    search.save()
-    res.render("results", {
-      isAdmin: req.isAuthenticated(),
-      results: results
-    })
-  }
+      search.save()
+      res.render("results", {
+        isAdmin: req.isAuthenticated(),
+        results: results
+      })
+    }
   });
 });
 
