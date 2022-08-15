@@ -122,10 +122,8 @@ for i in range(round(len(divisionResults)/2)):
         totalPointsPerStage = 1
     stagePercentOfTotal = round(totalPoints/totalPointsPerStage * 100,2)
 
-    if i < len(stages):
-        finalStageName = f"{stageName.getText()} - {stages[i].getText()}"
-    else:
-        finalStageName = stageName.getText()
+
+    finalStageName = stageName.getText()
 
     print(f'''
 {finalStageName}
@@ -136,4 +134,8 @@ A {stageAlphas.getText()} C {stageCharlies.getText()} D {stageDeltas.getText()} 
 {totalPoints}/{totalPointsPerStage} ({float(stagePercentOfTotal):.2f}%)''')
     print(" ")
 
+print("Possible stage names:")
+for stage in stages:
+    print(stage.getText())
+    print()
 sys.stdout.flush()
