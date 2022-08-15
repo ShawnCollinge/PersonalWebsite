@@ -1,11 +1,12 @@
 import re, sys, time
+from xmlrpc.client import Boolean, boolean
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
-def stage_list(StagesSoup):
+def stage_list(StagesSoup) -> list:
     stageList = []
     stagesTable = StagesSoup.find_all(name="table")
     stagesTable = stagesTable[1].find_all(name="tr")
@@ -15,9 +16,30 @@ def stage_list(StagesSoup):
             stageList.append(stage.strip())
     return stageList
 
-url = sys.argv[1]
+def calc_points(alphas:int, charlies:int, deltas:int, mikes:int, ns:int, proc:int, isMajor) -> int:
+    if isMajor:
+        charliePoints = 4
+        deltaPoints = 2
+    else:
+        charliePoints = 3
+        deltaPoints = 1
+    points = int(alphas) * 5 + int(charlies) * charliePoints + int(deltas) * deltaPoints - ((int(mikes) + int(ns) + int(proc)) * 10)
+    if points < 0:
+        return 0
+    return points
+
+def total_points(alphas:int, charlies:int, deltas:int, mikes:int) -> int:
+    points = (int(alphas) + int(charlies) + int(deltas) + int(mikes)) * 5
+    if points == 0:
+        return 1
+    return points
+
+
+url =  sys.argv[1]
 firstName = sys.argv[2]
 lastName = sys.argv[3]
+splitURL = url.split("?")
+url = splitURL[0].strip()
 
 name = f"{lastName}, {firstName}"
 options = Options()
@@ -64,18 +86,10 @@ NoPM = mikes.find_next(name="td")
 NoS = NoPM.find_next(name="td")
 Proc = NoS.find_next(name="td")
 
-if powerFactor.getText().strip() == "MAJOR":
-    charliePoints = 4
-    deltaPoints = 2
-else: 
-    charliePoints = 3
-    deltaPoints = 1
+isMajor = powerFactor.getText().strip() == "MAJOR"
 
-points = int(alphas.getText()) * 5 + int(charlies.getText()) * charliePoints + int(deltas.getText()) * deltaPoints - (int(mikes.getText()) + int(NoS.getText()) + int(Proc.getText())) * 10 
-totalPoints = (int(alphas.getText()) + int(charlies.getText()) + int(deltas.getText()) + int(mikes.getText())) * 5
-
-if points < 0:
-    points = 0
+points = calc_points(alphas.getText(), charlies.getText(), deltas.getText(), mikes.getText(), NoS.getText(), Proc.getText(), isMajor)
+totalPoints = total_points(alphas.getText(), charlies.getText(), deltas.getText(), mikes.getText())
 
 print(f'''Overall Time {totalTime.getText()}
 {divisionPlace}/{divisionLastPlace} {division.getText()} ({float(divisionPercent.getText()):.2f}%)
@@ -105,8 +119,7 @@ for i in range(len(stages)):
     place = video.find_next("td")
     percent = place.find_next("td")
 
-    stageName = divisionResults[i].find_next("span")
-    divisionPlace = stageName.find_next("td").find_next("td")
+    divisionPlace = divisionResults[i].find_next("span").find_next("td").find_next("td")
     divisionPercent = divisionPlace.find_next("td")
     divisionPoints = divisionPercent.find_next("td")
     hitFactor = divisionPoints.find_next("td").find_next("td")
@@ -128,14 +141,8 @@ for i in range(len(stages)):
     if len(divisionPlace.split()) > 1:
         divisionPlace = divisionPlace.split("-")[0]
 
-    totalPoints = int(stageAlphas.getText()) * 5 + int(stageCharlies.getText()) * charliePoints + int(stageDeltas.getText()) * deltaPoints - int(stageMikes.getText()) * 10 - int(stageNS.getText()) * 10 - int(stageProc.getText()) * 10
-    if totalPoints < 0:
-        totalPoints = 0
-
-    totalPointsPerStage = int(stageAlphas.getText()) + int(stageCharlies.getText()) + int(stageDeltas.getText()) + int(stageMikes.getText())
-    totalPointsPerStage *= 5
-    if (totalPointsPerStage == 0):
-        totalPointsPerStage = 1
+    totalPoints = calc_points(stageAlphas.getText(), stageCharlies.getText(), stageDeltas.getText(), stageMikes.getText(), stageNS.getText(), stageProc.getText(), isMajor)
+    totalPointsPerStage = total_points(stageAlphas.getText(), stageCharlies.getText(), stageDeltas.getText(), stageMikes.getText())
     stagePercentOfTotal = round(totalPoints/totalPointsPerStage * 100,2)
 
     finalStageName = stages[i]
