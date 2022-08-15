@@ -122,8 +122,13 @@ for i in range(round(len(divisionResults)/2)):
         totalPointsPerStage = 1
     stagePercentOfTotal = round(totalPoints/totalPointsPerStage * 100,2)
 
+    if i < len(stages):
+        finalStageName = f"{stageName.getText()} - {stages[i].getText()}"
+    else:
+        finalStageName = stageName.getText()
+
     print(f'''
-{stageName.getText()}
+{finalStageName}
 {divisionPlace.strip()}/{divisionLastPlace} {division.getText()} ({float(divisionPercent.getText()):.2f}%)
 {place.strip()}/{lastPlace} Overall ({float(percent.getText()):.2f}%)
 Time {stageTime.getText()}, HF {float(hitFactor.getText()):.4f}
