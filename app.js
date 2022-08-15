@@ -397,7 +397,7 @@ app.post("/practiscore", function (req, res) {
   let options = {
     mode: 'text',
     pythonOptions: ['-u'],
-    args: [searchData.url, searchData.firstName, searchData.lastName]
+    args: [searchData.url, searchData.firstName, searchData.lastName, req.body.displayMode]
   };
   PythonShell.run('main.py', options, function (err, results) {
     if (err) {

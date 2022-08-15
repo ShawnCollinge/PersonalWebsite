@@ -34,12 +34,44 @@ def total_points(alphas:int, charlies:int, deltas:int, mikes:int) -> int:
         return 1
     return points
 
+def marcel_print(place, percent, stage, time, alphas, charlies, deltas, mikes, npm, ns, proc, hf, division):
+    place = int(place)
+    if place == 1:
+        printString = "Stage Win"
+    elif place == 2:
+        printString = f"2nd {division} {percent}%"
+    elif place == 3:
+        printString = f"3rd {division} {percent}%"
+    else:
+        printString = f"{place}th {division} {percent}%"
+    printString += f" - Stage {stage}\nTime: {time}s, {alphas}A, "
+    if int(charlies) > 0:
+        printString += f"{charlies}C, "
+    if int(deltas) > 0:
+        printString += f"{deltas}D, "
+    if int(mikes) > 0:
+        printString += f"{mikes}M, "
+    if int(npm) > 0:
+        printString += f"{npm}NPM, "
+    if int(ns) > 0:
+        printString += f"{ns}NS, "
+    if int(proc) > 0:
+        printString += f"{proc}PROC, "
+    printString += f"{float(hf):.4f}HF"
+    print (printString)
+
+
 
 url =  sys.argv[1]
 firstName = sys.argv[2]
 lastName = sys.argv[3]
+isMarcel = sys.argv[4]
 splitURL = url.split("?")
 url = splitURL[0].strip()
+if isMarcel == "true":
+    isMarcel = True
+else:
+    isMarcel = False
 
 name = f"{lastName}, {firstName}"
 options = Options()
@@ -146,8 +178,11 @@ for i in range(len(stages)):
     stagePercentOfTotal = round(totalPoints/totalPointsPerStage * 100,2)
 
     finalStageName = stages[i]
-
-    print(f'''
+    if isMarcel:
+        marcel_print(divisionPlace, divisionPercent.getText().strip(), finalStageName, stageTime.getText().strip(), stageAlphas.getText(), stageCharlies.getText(), 
+        stageDeltas.getText(), stageMikes.getText(), stageNPM.getText(), stageNS.getText(), stageProc.getText(), hitFactor.getText(), division.getText())
+    else:
+        print(f'''
 {finalStageName}
 {divisionPlace.strip()}/{divisionLastPlace} {division.getText()} ({float(divisionPercent.getText()):.2f}%)
 {place.strip()}/{lastPlace} Overall ({float(percent.getText()):.2f}%)
