@@ -5,6 +5,16 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
+def stage_list(StagesSoup):
+    stageList = []
+    stagesTable = StagesSoup.find_all(name="table")
+    stagesTable = stagesTable[1].find_all(name="tr")
+    for stages in stagesTable:
+        stage = stages.find_next("a").getText()
+        if stage.strip() != "Combined":
+            stageList.append(stage.strip())
+    return stageList
+
 url = sys.argv[1]
 firstName = sys.argv[2]
 lastName = sys.argv[3]
@@ -78,12 +88,16 @@ html = driver.page_source
 MySoup = BeautifulSoup(html, "html.parser")
 divisionResults = MySoup.find_all(name="tr", class_="divisionRow")
 results = MySoup.find_all(name="tr", class_="overallRow")
-stagesParent = MySoup.find(name="div", id="editHistory")
-stages = stagesParent.findChildren("h3")
+stagesPage = MySoup.find(name="a", text=re.compile("Html Results"))['href']
+driver.get(stagesPage)
+stagesHTML = driver.page_source
+StagesSoup = BeautifulSoup(stagesHTML, "html.parser")
+stages = stage_list(StagesSoup)
+
 
 driver.close()
 
-for i in range(round(len(divisionResults)/2)):
+for i in range(len(stages)):
     startingPoint = results[i].find_next("td")
     video = startingPoint.find_next("td")
     place = video.find_next("td")
@@ -122,8 +136,7 @@ for i in range(round(len(divisionResults)/2)):
         totalPointsPerStage = 1
     stagePercentOfTotal = round(totalPoints/totalPointsPerStage * 100,2)
 
-
-    finalStageName = stageName.getText()
+    finalStageName = stages[i]
 
     print(f'''
 {finalStageName}
@@ -134,8 +147,4 @@ A {stageAlphas.getText()} C {stageCharlies.getText()} D {stageDeltas.getText()} 
 {totalPoints}/{totalPointsPerStage} ({float(stagePercentOfTotal):.2f}%)''')
     print(" ")
 
-print("Possible stage names:")
-for stage in stages:
-    print(stage.getText())
-    print()
 sys.stdout.flush()
