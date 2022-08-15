@@ -1,4 +1,4 @@
-import re, sys
+import re, sys, time
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.options import Options
@@ -27,7 +27,6 @@ driver.get(url)
 html = driver.page_source
 MySoup = BeautifulSoup(html, "html.parser")
 results = MySoup.find_all(name="a", class_="shooterLink")
-theResult = "test"
 for result in results:
     if name.lower() in result.getText().lower():
         theResult = result
@@ -90,6 +89,7 @@ divisionResults = MySoup.find_all(name="tr", class_="divisionRow")
 results = MySoup.find_all(name="tr", class_="overallRow")
 stagesPage = MySoup.find(name="a", type="button")['href']
 driver.get(stagesPage)
+time.sleep(2)
 stagesHTML = driver.page_source
 StagesSoup = BeautifulSoup(stagesHTML, "html.parser")
 stages = stage_list(StagesSoup)
