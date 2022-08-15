@@ -74,6 +74,9 @@ else:
 points = int(alphas.getText()) * 5 + int(charlies.getText()) * charliePoints + int(deltas.getText()) * deltaPoints - (int(mikes.getText()) + int(NoS.getText()) + int(Proc.getText())) * 10 
 totalPoints = (int(alphas.getText()) + int(charlies.getText()) + int(deltas.getText()) + int(mikes.getText())) * 5
 
+if points < 0:
+    points = 0
+
 print(f'''Overall Time {totalTime.getText()}
 {divisionPlace}/{divisionLastPlace} {division.getText()} ({float(divisionPercent.getText()):.2f}%)
 {overallPlace}/{lastPlace} Overall ({float(overallPercent.getText()):.2f}%)
@@ -93,7 +96,6 @@ time.sleep(2)
 stagesHTML = driver.page_source
 StagesSoup = BeautifulSoup(stagesHTML, "html.parser")
 stages = stage_list(StagesSoup)
-
 
 driver.close()
 
