@@ -62,8 +62,8 @@ else:
     charliePoints = 3
     deltaPoints = 1
 
-points = int(alphas) * 5 + int(charlies) * charliePoints + int(deltas) * deltaPoints - (int(mikes) + int(NoS) + int(Proc)) * 10 
-totalPoints = (int(alphas) + int(charlies) + int(deltas) + int(mikes)) * 5
+points = int(alphas.getText()) * 5 + int(charlies.getText()) * charliePoints + int(deltas.getText()) * deltaPoints - (int(mikes.getText()) + int(NoS.getText()) + int(Proc.getText())) * 10 
+totalPoints = (int(alphas.getText()) + int(charlies.getText()) + int(deltas.getText()) + int(mikes.getText())) * 5
 
 print(f'''Overall Time {totalTime.getText()}
 {divisionPlace}/{divisionLastPlace} {division.getText()} ({float(divisionPercent.getText()):.2f}%)
