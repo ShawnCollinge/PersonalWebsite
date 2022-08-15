@@ -88,7 +88,7 @@ html = driver.page_source
 MySoup = BeautifulSoup(html, "html.parser")
 divisionResults = MySoup.find_all(name="tr", class_="divisionRow")
 results = MySoup.find_all(name="tr", class_="overallRow")
-stagesPage = MySoup.find(name="a", text=re.compile("Html Results"))['href']
+stagesPage = MySoup.find(name="a", type="button")['href']
 driver.get(stagesPage)
 stagesHTML = driver.page_source
 StagesSoup = BeautifulSoup(stagesHTML, "html.parser")
