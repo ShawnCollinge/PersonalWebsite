@@ -69,7 +69,7 @@ print(f'''Overall Time {totalTime.getText()}
 {divisionPlace}/{divisionLastPlace} {division.getText()} ({float(divisionPercent.getText()):.2f}%)
 {overallPlace}/{lastPlace} Overall ({float(overallPercent.getText()):.2f}%)
 A {alphas.getText()} C {charlies.getText()} D {deltas.getText()} M {mikes.getText()} NPM {NoPM.getText()} NS {NoS.getText()} PROC {Proc.getText()}
-{points}/{totalPoints} ({round(points/totalPoints, 2)}%)
+{points}/{totalPoints} ({round(points/totalPoints*100, 2)}%)
 ''')
 print(" ")
 
