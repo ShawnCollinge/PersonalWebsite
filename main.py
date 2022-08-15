@@ -46,7 +46,8 @@ divisionPoints = divisionPercent.find_next(name="td")
 totalTime = divisionPoints.find_next(name="td")
 percentOfPointsPossible = totalTime.find_next(name="td")
 division = percentOfPointsPossible.find_next(name="td")
-alphas = division.find_next(name="td").find_next("td").find_next("td").find_next("td").find_next("td")
+powerFactor = division.find_next(name="td").find_next("td").find_next("td")
+alphas = powerFactor.find_next("td").find_next("td")
 charlies = alphas.find_next(name="td").find_next("td")
 deltas = charlies.find_next(name="td")
 mikes = deltas.find_next(name="td")
@@ -54,15 +55,23 @@ NoPM = mikes.find_next(name="td")
 NoS = NoPM.find_next(name="td")
 Proc = NoS.find_next(name="td")
 
+if powerFactor.getText().strip() == "MAJOR":
+    charliePoints = 4
+    deltaPoints = 2
+else: 
+    charliePoints = 3
+    deltaPoints = 1
+
+points = int(alphas) * 5 + int(charlies) * charliePoints + int(deltas) * deltaPoints - (int(mikes) + int(NoS) + int(Proc)) * 10 
+totalPoints = (int(alphas) + int(charlies) + int(deltas) + int(mikes)) * 5
+
 print(f'''Overall Time {totalTime.getText()}
 {divisionPlace}/{divisionLastPlace} {division.getText()} ({float(divisionPercent.getText()):.2f}%)
 {overallPlace}/{lastPlace} Overall ({float(overallPercent.getText()):.2f}%)
 A {alphas.getText()} C {charlies.getText()} D {deltas.getText()} M {mikes.getText()} NPM {NoPM.getText()} NS {NoS.getText()} PROC {Proc.getText()}
-{round(float(divisionPoints.getText()))}/{round(float(divisionPoints.getText())/(float(percentOfPointsPossible.getText())/100))}
+{points}/{totalPoints}
 ''')
 print(" ")
-
-StagesString = ""
 
 driver.get(f"{url}?q_individual={ShooterID}&q_division=0")
 html = driver.page_source
@@ -94,13 +103,6 @@ for i in range(round(len(divisionResults)/2)):
     stageNPM = stageMikes.find_next("td")
     stageNS = stageNPM.find_next("td")
     stageProc = stageNS.find_next("td")
-    
-    if powerFactor.getText() == "MAJOR":
-        charliePoints = 4
-        deltaPoints = 2
-    else: 
-        charliePoints = 3
-        deltaPoints = 1
 
     place = place.getText()
     if len(place.split()) > 1:
