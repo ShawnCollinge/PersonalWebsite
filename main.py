@@ -180,10 +180,10 @@ for i in range(len(stages)):
     finalStageName = stages[i]
     if finalStageName[0].isalpha():
         finalStageName = str(i + 1) + ": " + finalStageName
-        
+
     if isMarcel:
         marcel_print(divisionPlace, divisionPercent.getText().strip(), finalStageName, stageTime.getText().strip(), stageAlphas.getText(), stageCharlies.getText(), 
-        stageDeltas.getText(), stageMikes.getText(), stageNPM.getText(), stageNS.getText(), stageProc.getText(), hitFactor.getText(), division.getText(), i)
+        stageDeltas.getText(), stageMikes.getText(), stageNPM.getText(), stageNS.getText(), stageProc.getText(), hitFactor.getText(), division.getText())
     else:
         print(f'''
 {finalStageName}
