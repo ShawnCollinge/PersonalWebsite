@@ -138,12 +138,10 @@ divisionResults = MySoup.find_all(name="tr", class_="divisionRow")
 results = MySoup.find_all(name="tr", class_="overallRow")
 stagesPage = MySoup.find(name="a", type="button")['href']
 driver.get(stagesPage)
-print(stagesPage)
 time.sleep(2)
 stagesHTML = driver.page_source
 StagesSoup = BeautifulSoup(stagesHTML, "html.parser")
 stages = stage_list(StagesSoup)
-print(stages)
 
 driver.close()
 
