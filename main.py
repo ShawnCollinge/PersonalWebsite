@@ -34,7 +34,7 @@ def total_points(alphas:int, charlies:int, deltas:int, mikes:int) -> int:
         return 1
     return points
 
-def marcel_print(place:int, percent:float, stage:str, time:float, alphas:int, charlies:int, deltas:int, mikes:int, npm:int, ns:int, proc:int, hf:float, division:str) -> None:
+def marcel_print(place:int, percent:float, stage:str, time:float, alphas:int, charlies:int, deltas:int, mikes:int, npm:int, ns:int, proc:int, hf:float, division:str, stageNumber) -> None:
     place = int(place)
     if place == 1:
         printString = "Stage Win"
@@ -44,6 +44,8 @@ def marcel_print(place:int, percent:float, stage:str, time:float, alphas:int, ch
         printString = f"3rd {division} {percent}%"
     else:
         printString = f"{place}th {division} {percent}%"
+    if stage[0].isalpha():
+        stage = stageNumber + 1 + ": " + stage
     printString += f" - Stage {stage}\nTime: {time}s, {alphas}A, "
     if int(charlies) > 0:
         printString += f"{charlies}C, "
@@ -180,7 +182,7 @@ for i in range(len(stages)):
     finalStageName = stages[i]
     if isMarcel:
         marcel_print(divisionPlace, divisionPercent.getText().strip(), finalStageName, stageTime.getText().strip(), stageAlphas.getText(), stageCharlies.getText(), 
-        stageDeltas.getText(), stageMikes.getText(), stageNPM.getText(), stageNS.getText(), stageProc.getText(), hitFactor.getText(), division.getText())
+        stageDeltas.getText(), stageMikes.getText(), stageNPM.getText(), stageNS.getText(), stageProc.getText(), hitFactor.getText(), division.getText(), i)
     else:
         print(f'''
 {finalStageName}
