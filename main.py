@@ -10,8 +10,9 @@ def stage_list(StagesSoup) -> list:
     stagesTable = StagesSoup.find_all(name="table")
     stagesTable = stagesTable[1].find_all(name="tr")
     for stages in stagesTable:
-        stage = stages.find_next("a").getText()
-        if stage.strip() != "Combined":
+        stage = stages.find_next("td")
+        if stage.find_next("td") and stage.find_next("td").getText() == "Review":
+            stage = stage.getText()
             stageList.append(stage.strip())
     return stageList
 
@@ -58,7 +59,6 @@ def marcel_print(place:int, percent:float, stage:str, time:float, alphas:int, ch
         printString += f"{proc}PROC, "
     printString += f"{float(hf):.4f}HF"
     print (printString)
-
 
 
 url =  sys.argv[1]
@@ -138,10 +138,12 @@ divisionResults = MySoup.find_all(name="tr", class_="divisionRow")
 results = MySoup.find_all(name="tr", class_="overallRow")
 stagesPage = MySoup.find(name="a", type="button")['href']
 driver.get(stagesPage)
+print(stagesPage)
 time.sleep(2)
 stagesHTML = driver.page_source
 StagesSoup = BeautifulSoup(stagesHTML, "html.parser")
 stages = stage_list(StagesSoup)
+print(stages)
 
 driver.close()
 
