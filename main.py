@@ -1,5 +1,4 @@
 import re, sys, time
-from xmlrpc.client import Boolean, boolean
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.options import Options
@@ -34,7 +33,7 @@ def total_points(alphas:int, charlies:int, deltas:int, mikes:int) -> int:
         return 1
     return points
 
-def marcel_print(place, percent, stage, time, alphas, charlies, deltas, mikes, npm, ns, proc, hf, division):
+def marcel_print(place:int, percent:float, stage:str, time:float, alphas:int, charlies:int, deltas:int, mikes:int, npm:int, ns:int, proc:int, hf:float, division:str) -> None:
     place = int(place)
     if place == 1:
         printString = "Stage Win"
@@ -81,6 +80,7 @@ driver.get(url)
 html = driver.page_source
 MySoup = BeautifulSoup(html, "html.parser")
 results = MySoup.find_all(name="a", class_="shooterLink")
+theResult = ""
 for result in results:
     if name.lower() in result.getText().lower():
         theResult = result
