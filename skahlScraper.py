@@ -9,7 +9,6 @@ import pandas as pd
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from dotenv import load_dotenv
-from os import getenv
 load_dotenv()
 
 SEASON =  sys.argv[1]
@@ -45,16 +44,16 @@ today = datetime.now()
 for i in range(len(schedule)):
     game = schedule[i]
     date = datetime.strptime(game['date'], "%m/%d/%Y")
-    if date.date() > today.date():
-        gameSchedule['Title'][i+1] = ""
-        gameSchedule['Type'][i+1] = TYPE
-        gameSchedule['Game Type'][i+1] = GAME_TYPE
-        gameSchedule['Home'][i+1] = game['teamHomeName']
-        gameSchedule['Away'][i+1] = game['teamAwayName']
-        gameSchedule['Date'][i+1] = date.strftime("%d/%m/%Y")
-        gameSchedule['Time'][i+1] = game['time']
-        gameSchedule['Duration'][i+1] = GAME_DURATION
-        gameSchedule['Location'][i+1] = game['rinkName']
+    #if date.date() > today.date():
+    gameSchedule['Title'][i+1] = ""
+    gameSchedule['Type'][i+1] = TYPE
+    gameSchedule['Game Type'][i+1] = GAME_TYPE
+    gameSchedule['Home'][i+1] = game['teamHomeName']
+    gameSchedule['Away'][i+1] = game['teamAwayName']
+    gameSchedule['Date'][i+1] = date.strftime("%d/%m/%Y")
+    gameSchedule['Time'][i+1] = game['time']
+    gameSchedule['Duration'][i+1] = GAME_DURATION
+    gameSchedule['Location'][i+1] = game['rinkName']
 
 df = pd.DataFrame(gameSchedule)
 df.to_csv(fileName, index=False)
@@ -74,4 +73,3 @@ time.sleep(5)
 os.remove(fileName) 
 
 driver.close()
-print("Done!")
