@@ -5,7 +5,7 @@
       <h1 class="h2">Update team schedule</h1>
     </div>
     <form action="/admin/skahl" method="post">
-      <select class="form-select" id="season" aria-label="Default select example">
+      <select class="form-select" name="season" aria-label="Default select example">
           <% seasons.forEach(function(season) { %>
             <option value="<%= season.id %>"><%= season.name %></option>
           <% }) %>

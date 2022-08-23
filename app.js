@@ -299,6 +299,7 @@ app.post("/admin/skahl", function (req, res) {
     pythonOptions: ['-u'],
     args: [req.body.season, req.body.type]
   };
+  console.log(options)
   PythonShell.run('skahlScraper.py', options, function (err, results) {
     if (err) {
       console.log(error)
