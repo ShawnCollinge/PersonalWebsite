@@ -60,6 +60,11 @@ def marcel_print(place:int, percent:float, stage:str, time:float, alphas:int, ch
     printString += f"{float(hf):.4f}HF"
     print (printString)
 
+def find_name(name, results):
+    for result in results:
+        if name.lower() in result.getText().lower():
+            return result
+    
 
 url =  sys.argv[1]
 firstName = sys.argv[2]
@@ -80,13 +85,8 @@ driver.get(url)
 html = driver.page_source
 MySoup = BeautifulSoup(html, "html.parser")
 results = MySoup.find_all(name="a", class_="shooterLink")
-theResult = ""
-for result in results:
-    if name.lower() in result.getText().lower():
-        theResult = result
-        continue
 
-ShooterID = theResult['shooterid']
+ShooterID = find_name(name, results)['shooterid']
 results = MySoup.find(name="a", shooterid=ShooterID)
 overallPlace = re.sub('\D', '', results.getText())
 rawLastPlace = MySoup.find_all("a", class_="shooterLink")[-1]

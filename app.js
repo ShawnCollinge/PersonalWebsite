@@ -8,6 +8,8 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const multer = require('multer')
 let { PythonShell } = require('python-shell')
+const axios = require('axios');
+
 
 const app = express();
 
@@ -258,6 +260,23 @@ app.get("/admin/practiscore", function (req, res) {
   }
 });
 
+app.get("/admin/skahl", async function (req, res) {
+  if (req.isAuthenticated()) {
+    const seasons = await axios.get('https://api.codetabs.com/v1/proxy/?quest=https://snokinghockeyleague.com/api/season/all/0?v=1021270').then(res => {
+      return res.data.seasons
+    })
+    .catch(error => {
+      console.error(error);
+    });
+    res.render("skahl", {
+      isAdmin: req.isAuthenticated(),
+      seasons: seasons
+    });
+  } else {
+    res.redirect("/login")
+  }
+});
+
 // app.post("/register", function(req, res) {
 //   User.register({
 //     username: req.body.username
@@ -272,6 +291,27 @@ app.get("/admin/practiscore", function (req, res) {
 //     }
 //   });
 // });
+
+app.post("/admin/skahl", function (req, res) {
+  if (req.isAuthenticated()) {
+  let options = {
+    mode: 'text',
+    pythonOptions: ['-u'],
+    args: [req.body.season, req.body.type]
+  };
+  PythonShell.run('skahlScraper.py', options, function (err, results) {
+    if (err) {
+      console.log(error)
+      res.redirect("/admin/skahl")
+    } else {
+      res.redirect("/admin/skahl")
+      console.log(results)
+    }
+  });
+} else {
+  res.redirect("/login")
+}
+});
 
 app.post("/admin/edit/:projectID", upload.array("images", 12), function (req, res) {
   if (req.isAuthenticated()) {
