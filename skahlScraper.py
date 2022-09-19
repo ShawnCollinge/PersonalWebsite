@@ -15,7 +15,7 @@ SEASON =  sys.argv[1]
 GAME_DURATION = "1:30"
 TYPE = "GAME"
 GAME_TYPE = sys.argv[2]
-TEAM = "2609"
+TEAM = "2200"
 
 URL = f"https://api.codetabs.com/v1/proxy/?quest=https://snokinghockeyleague.com/api/game/list/{SEASON}/0/{TEAM}"
 
@@ -23,9 +23,7 @@ options = Options()
 options.headless = True
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 response = requests.get(URL)
-
 schedule = response.json()
-
 fileName = f"{TEAM}.csv"
 
 gameSchedule = {
