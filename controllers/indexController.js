@@ -16,7 +16,7 @@ exports.index_page = function (req, res) {
             res.render("home", {
                 featureProjects: posts,
                 about: aboutContent,
-                isAdmin: req.isAuthenticated()
+                user: req.user
             });
         }
     });
@@ -36,6 +36,6 @@ exports.short_url = function (req, res) {
 
 exports.contact = function (req, res) {
     res.render("contact", {
-      isAdmin: req.isAuthenticated()
+        user: req.user
     });
   };

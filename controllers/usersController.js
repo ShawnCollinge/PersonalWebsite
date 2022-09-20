@@ -2,12 +2,12 @@ const User = require('../models/User');
 const passport = require("passport");
 
 exports.register_page = function (req, res) {
-    res.render("register", { isAdmin: req.isAuthenticated() });
+    res.render("register", { user: req.user });
 };
 
 exports.login_page = function (req, res) {
     res.render("login", {
-        isAdmin: req.isAuthenticated()
+        user: req.user
     });
 };
 
@@ -29,7 +29,7 @@ exports.register_post = function (req, res) {
             res.redirect("/register");
         } else {
             passport.authenticate("local")(req, res, function () {
-                res.redirect("/admin");
+                res.redirect("/");
             });
         }
     });
@@ -46,7 +46,7 @@ exports.login_post = function (req, res) {
             console.log(err);
         } else {
             passport.authenticate("local")(req, res, function () {
-                res.redirect("/admin");
+                res.redirect("/");
             });
         }
     });

@@ -2,9 +2,9 @@ const Project = require('../models/project');
 const PractiscoreSearch = require('../models/practiscoreSearch');
 
 exports.admin_home = function (req, res) {
-  if (req.isAuthenticated()) {
+  if (req.user?.isAdmin) {
     res.render("admin", {
-      isAdmin: req.isAuthenticated()
+      user: req.user
     });
   } else {
     res.redirect("/login");
@@ -12,9 +12,9 @@ exports.admin_home = function (req, res) {
 };
 
 exports.new_project = function (req, res) {
-  if (req.isAuthenticated()) {
+  if (req.user?.isAdmin) {
     res.render("newProject", {
-      isAdmin: req.isAuthenticated()
+      user: req.user
     });
   } else {
     res.redirect("/login");
@@ -22,12 +22,12 @@ exports.new_project = function (req, res) {
 };
 
 exports.edit_project = function (req, res) {
-  if (req.isAuthenticated()) {
+  if (req.user?.isAdmin) {
       Project.findOne({
           _id: req.params.projectID
       }, function (err, post) {
           res.render("editProject", {
-              isAdmin: req.isAuthenticated(),
+              user: req.user,
               project: post
           });
       });
@@ -37,7 +37,7 @@ exports.edit_project = function (req, res) {
 };
 
 exports.new_project_post = function (req, res) {
-  if (req.isAuthenticated()) {
+  if (req.user?.isAdmin) {
       const project = new Project({
           title: req.body.title,
           githubLink: req.body.githubLink,
@@ -55,14 +55,14 @@ exports.new_project_post = function (req, res) {
 };
 
 exports.practiscore_search = function (req, res) {
-  if (req.isAuthenticated()) {
+  if (req.user?.isAdmin) {
       PractiscoreSearch.find({}, function (err, posts) {
           if (err) {
               console.log(err);
           } else {
               res.render("practiscoreData", {
                   results: posts,
-                  isAdmin: req.isAuthenticated()
+                  user: req.user
               });
           }
       });
@@ -72,7 +72,7 @@ exports.practiscore_search = function (req, res) {
 };
 
 exports.edit_project_post = function (req, res) {
-  if (req.isAuthenticated()) {
+  if (req.user?.isAdmin) {
     Project.findOne({
       _id: req.params.projectID
     }, function (err, post) {
@@ -103,7 +103,7 @@ exports.edit_project_post = function (req, res) {
 };
 
 exports.delete_project = function (req, res) {
-  if (req.isAuthenticated()) {
+  if (req.user?.isAdmin) {
     Project.deleteOne({
       _id: req.params.projectID
     }, function (err) {
@@ -119,7 +119,7 @@ exports.delete_project = function (req, res) {
 };
 
 exports.delete_image = function (req, res) {
-  if (req.isAuthenticated()) {
+  if (req.user?.isAdmin) {
     Project.findOne({
       _id: req.params.projectID
     }, function (err, post) {

@@ -41,8 +41,8 @@ app.use("/", index);
 app.use("/projects", projects);
 app.use("/practiscore", practiscore);
 
-// app.get("/register", users);
-// app.post("/register", users);
+app.get("/register", users);
+app.post("/register", users);
 app.get("/login", users);
 app.get("/logout", users);
 app.post("/login", users);

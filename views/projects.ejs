@@ -21,7 +21,7 @@
                 <a href="<%=projects[i].demoLink%>" target="_blank" class="btn btn-sm btn-outline-secondary<% if (!projects[i].demoLink) { %> disabled<% } %>">Demo</a>
                 <a href="/projects/<%=projects[i].id%>" class="btn btn-sm btn-outline-secondary">More info</a>
               </div>
-              <% if (isAdmin) { %>
+              <% if (user?.isAdmin) { %>
               <div class="btn-group">
                 <button type="button" onclick="location.href='/admin/edit/<%=projects[i].id%>'" class="btn btn-sm btn-primary">Edit</button>
                 <form action="/admin/delete/<%=projects[i].id%>" method="post">

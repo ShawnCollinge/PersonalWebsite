@@ -20,7 +20,7 @@ exports.pull_data = function (req, res) {
         } else {
             search.save()
             res.render("results", {
-                isAdmin: req.isAuthenticated(),
+                user: req.user,
                 results: results
             })
         }
@@ -29,6 +29,6 @@ exports.pull_data = function (req, res) {
 
 exports.index = function (req, res) {
     res.render("practiscore", {
-        isAdmin: req.isAuthenticated()
+        user: req.user
     });
 };

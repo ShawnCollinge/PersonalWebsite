@@ -29,7 +29,7 @@
                 <a href="<%=project.demoLink%>" target="_blank" class="btn btn-sm btn-outline-secondary<% if (!project.demoLink) { %> disabled<% } %>">Demo</a>
                 <a href="/projects/<%=project.id%>" class="btn btn-sm btn-outline-secondary">More info</a>
               </div>
-              <% if (isAdmin) { %>
+              <% if (user?.isAdmin) { %>
               <div class="btn-group">
                 <button type="button" onclick="location.href='/admin/edit/<%=project.id%>'" class="btn btn-sm btn-primary">Edit</button>
                 <form action="/admin/delete/<%=project.id%>" method="post">
