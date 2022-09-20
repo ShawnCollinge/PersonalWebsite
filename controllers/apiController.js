@@ -135,9 +135,6 @@ function makeid(length) {
 };
 
 async function idDoesntExist(id) {
-    let test = await ShortURL.exists({ _id: id })
-    console.log(id)
-    console.log(test)
-    console.log(test != null)
-    return test != null;
+    let isValid = await ShortURL.exists({ _id: id })
+    return isValid != null;
 };
