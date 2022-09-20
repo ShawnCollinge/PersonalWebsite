@@ -7,7 +7,7 @@
     <div class="col-sm-8">
       <div class="card">
         <div class="card-body">
-          <form action="/login" method="POST">
+          <form action="/users/login" method="POST">
             <div class="form-group">
               <label for="email">Username</label>
               <input type="text" class="form-control" name="username">
@@ -16,7 +16,9 @@
               <label for="password">Password</label>
               <input type="password" class="form-control" name="password">
             </div>
+            <br>
             <button type="submit" class="btn btn-dark">Login</button>
+            <a href="/users/register">Click here to register!</a>
           </form>
 
         </div>

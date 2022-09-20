@@ -22,7 +22,8 @@ exports.logout = function (req, res) {
 
 exports.register_post = function (req, res) {
     User.register({
-        username: req.body.username
+        username: req.body.username,
+        email: req.body.email
     }, req.body.password, function (err, user) {
         if (err) {
             console.log(err);

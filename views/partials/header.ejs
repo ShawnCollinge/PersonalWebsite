@@ -32,20 +32,29 @@
                     Projects
                   </a>
                 </li>
+                <% if (user == null) { %>
+                  <li class="nav-item">
+                    <a href="/users/login" class="nav-link text-white">
+                      Login/register
+                    </a>
+                  </li>
+                  <% } %>
               </ul>
-              <% if (user?.isAdmin) { %>
+              <% if (user) { %>
               <div class="dropdown text-end">
                 <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="/uploads/72178760.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
+                  <img src="/uploads/<%= user.img %>" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser">
+                  <% if (user?.isAdmin) { %>
                   <li><a class="dropdown-item" href="/admin/newProject">New project...</a></li>
                   <li><a class="dropdown-item" href="/admin">Admin panel</a></li>
-                  <li><a class="dropdown-item" href="/admin/settings">Profile settings</a></li>
+                  <% } %>
+                  <li><a class="dropdown-item" href="/users/settings">Profile settings</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                  <li><a class="dropdown-item" href="/users/logout">Sign out</a></li>
                 </ul>
               </div>
               <% } %>
