@@ -20,20 +20,28 @@ exports.logout = function (req, res) {
     res.redirect("/");
 };
 
-exports.register_post = function (req, res) {
-    User.register({
-        username: req.body.username,
-        email: req.body.email
-    }, req.body.password, function (err, user) {
+exports.register_post = async function (req, res) {
+    let data = {
+        username: req.body.username
+    }
+    password = req.body.password
+    if (await User.exists({'username': data.username})) {
+        res.render("register", { user: req.user, message: "Email already in use!" });
+    } else if (req.body.verifypassword != password) {
+        res.render("register", { user: req.user, message: "Passwords don't match." });
+    } else {
+    User.register(data, password, function (err, user) {
         if (err) {
             console.log(err);
-            res.redirect("/register");
+            res.redirect("/users/register");
         } else {
-            passport.authenticate("local")(req, res, function () {
+            passport.authenticate("local")(req, res, function (err) {
+                console.log(err);
                 res.redirect("/");
             });
         }
     });
+}
 };
 
 exports.login_post = function (req, res) {
@@ -51,4 +59,20 @@ exports.login_post = function (req, res) {
             });
         }
     });
+};
+
+exports.forgot_password = function (req, res) {
+
+}
+
+
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
 };

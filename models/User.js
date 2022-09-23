@@ -12,8 +12,7 @@ const userSchema = new Schema({
   img: {
     type: String,
     default: "default-image.png"
-  },
-  email: String
+  }
 });
 
 userSchema.plugin(passportLocalMongoose);

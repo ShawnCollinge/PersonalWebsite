@@ -50,7 +50,7 @@ exports.api_post = async function (req, res) {
         if (type == "short") {
             const base = process.env.BASE;
             let shortID = makeid(7);
-            while (await idDoesntExist(shortID)) {
+            while (await ShortURL.exists({ _id: shortID })) {
                 shortID = makeid(7);
             }
             data['_id'] = shortID;
@@ -132,9 +132,4 @@ function makeid(length) {
             charactersLength));
     }
     return result;
-};
-
-async function idDoesntExist(id) {
-    let isValid = await ShortURL.exists({ _id: id })
-    return isValid != null;
 };
