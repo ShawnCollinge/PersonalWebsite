@@ -20,8 +20,8 @@ const upload = multer({
 router.get("/", admin_controller.admin_home);
 router.get("/newproject", admin_controller.new_project);
 router.get("/edit/:projectID", admin_controller.edit_project);
-router.post("/newproject", upload.array("images", 12), admin_controller.new_project_post);
 router.get("/practiscore", admin_controller.practiscore_search);
+router.post("/newproject", upload.array("images", 12), admin_controller.new_project_post);
 router.post("/edit/:projectID", upload.array("images", 12), admin_controller.edit_project_post);
   
 router.post("/delete/:projectID", admin_controller.delete_project);
