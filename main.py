@@ -1,8 +1,8 @@
 import requests, sys
 
 matchCode =  sys.argv[1]
-firstName = sys.argv[2]
-lastName = sys.argv[3]
+firstName = sys.argv[2].lower()
+lastName = sys.argv[3].lower()
 isMarcel = sys.argv[4]
 matchCode = matchCode.strip()
 
@@ -15,7 +15,7 @@ else:
 def get_shooterID(matchCode, lastName, firstName):
     response = requests.get(f"https://s3.amazonaws.com/ps-scores/production/{matchCode}/match_def.json").json()['match_shooters']
     for shooter in response:
-        if shooter['sh_ln'] == lastName and shooter['sh_fn'] == firstName:
+        if shooter['sh_ln'].lower() == lastName and shooter['sh_fn'].lower() == firstName:
             return { 
                 "id": shooter['sh_uuid'], 
                 "class": shooter['sh_dvp'],
