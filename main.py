@@ -153,7 +153,7 @@ def marcel_print(stages, scores, shooter):
         print(printString)
         print(" ")
     print(f"Overall Time {overallScores['time']}")
-    print(f"{shooter['classPlace']} {shooter['class']} ({shooter['classPercentPossible']}%)")
+    print(f"{shooter['classPlace']} {shooter['class']} ({shooter['classPercent']}%)")
     print(f"{shooter['place']} Overall ({shooter['matchPercent']}%)")
     printString = ""
     for key in overallScores:
@@ -168,4 +168,5 @@ stagePlace = get_stage_info(matchCode, shooterInfo)
 scores = find_scores(matchCode,shooterInfo)
 
 marcel_print(stagePlace, scores, shooterInfo)
+
 sys.stdout.flush()
