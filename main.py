@@ -128,7 +128,7 @@ def marcel_print(stages, scores, shooter):
         "PROC": 0,
         "time": 0,
     }
-    for i in range(len(scores)):
+    for i in range(len(stages)):
         place = stages[i]['place']
         shooterClass = shooter['class'] 
         percent = stages[i]['percent']
