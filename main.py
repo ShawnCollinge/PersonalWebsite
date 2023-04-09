@@ -66,7 +66,7 @@ def find_scores(matchCode, shooter):
     def find_shooter(stagescores):
         for shooter in stagescores:
             if shooter['shtr'] == shooterID:
-                                scores = {
+                scores = {
                     'A': 0,
                     'C': 0,
                     'D': 0,
