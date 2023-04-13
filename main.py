@@ -77,7 +77,10 @@ def find_scores(matchCode, shooter):
                     'time': 0
                 }
                 try:
-                    rawScores = shooter['ts']
+                    if 'ts' in shooter:
+                        rawScores = shooter['ts']
+                    else:
+                        rawScores = 0
                     for timeInSec in shooter['str']:
                         scores['time'] += timeInSec
                     if 'proc' in shooter:
