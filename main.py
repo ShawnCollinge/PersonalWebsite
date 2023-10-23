@@ -115,7 +115,9 @@ def find_scores(matchCode, shooter):
     totalScores = []
     shooterID = shooter['id']
     for stage in response['match_scores']:
-        totalScores.append(find_shooter(stage['stage_stagescores']))   
+        val = find_shooter(stage['stage_stagescores'])
+        if val:
+            totalScores.append(val)   
     return totalScores
 
 
