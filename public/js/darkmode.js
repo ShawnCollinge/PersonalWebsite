@@ -24,18 +24,29 @@
   document.addEventListener('DOMContentLoaded', function() {
     const toggle = document.getElementById('dark-mode-toggle');
     const currentMode = getCookie('darkMode');
-
+  
+    // Function to switch background classes
+    function switchBackgroundClasses() {
+      document.querySelectorAll('.bg-light, .bg-dark').forEach(el => {
+        el.classList.toggle('bg-light');
+        el.classList.toggle('bg-dark');
+      });
+    }
+  
     // Apply dark mode based on cookie
     if (currentMode === 'enabled') {
       document.body.classList.add('dark-mode');
+      switchBackgroundClasses(); // Switch background classes
     }
-
+  
     toggle.addEventListener('click', function(event) {
       event.preventDefault();
       document.body.classList.toggle('dark-mode');
-
+      switchBackgroundClasses(); // Switch background classes
+  
       // Update cookie based on current state
       var mode = document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled';
       setCookie('darkMode', mode, 7); // Save for 7 days, adjust as needed
     });
   });
+  
