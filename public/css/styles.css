@@ -135,7 +135,7 @@ body {
 }
 
 .profile-image {
-  max-height: 400px; /* Adjust this based on your text height */
+  max-height: 600px; /* Adjust this based on your text height */
   width: auto; /* This will maintain the aspect ratio */
   height: auto; /* This will scale the height dynamically */
   max-width: 100%; /* Ensures the image does not exceed the column width */
