@@ -11,6 +11,7 @@
   <div class="container">
     <h1 class="display-5 fw-bold">Featured projects</h1>
     <div class="row">
+      <% featureProjects.reverse() %>
       <% featureProjects.forEach(function(project) { %>
       <div class="col-lg-4 col-md-6">
         <div class="card mb-4 box-shadow">
