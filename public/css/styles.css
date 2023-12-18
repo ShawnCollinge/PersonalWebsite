@@ -164,11 +164,6 @@ body {
   color: #ffffff; /* Light text */
 }
 
-.dark-mode .container {
-  background-color: #282828; /* Dark background for containers */
-  color: #ffffff; /* Light text for containers */
-}
-
 .dark-mode .footer,
 .dark-mode .navbar,
 .dark-mode .bg-dark {
