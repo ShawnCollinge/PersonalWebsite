@@ -3,11 +3,13 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const toggle = document.getElementById('dark-mode-toggle');
-      toggle.addEventListener('click', function() {
+      toggle.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent any default action
         document.body.classList.toggle('dark-mode');
       });
     });
-  </script>  
+  </script>
+  
 <head>
   <meta charset="utf-8">
   <title>Shawns website</title>
