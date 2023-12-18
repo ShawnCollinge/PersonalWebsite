@@ -26,6 +26,14 @@
     const icon = document.getElementById('dark-mode-icon');
     const currentMode = getCookie('darkMode');
   
+    // Function to switch background classes
+    function switchBackgroundClasses() {
+      document.querySelectorAll('.bg-light, .bg-custom-dark').forEach(el => {
+        el.classList.toggle('bg-light');
+        el.classList.toggle('bg-custom-dark');
+      });
+    }
+  
     // Function to switch the icon
     function updateIcon() {
       if (document.body.classList.contains('dark-mode')) {
@@ -40,17 +48,20 @@
     // Apply dark mode based on cookie
     if (currentMode === 'enabled') {
       document.body.classList.add('dark-mode');
-      updateIcon();
+      switchBackgroundClasses(); // Switch background classes
+      updateIcon(); // Update the icon
     }
   
     toggle.addEventListener('click', function(event) {
       event.preventDefault();
       document.body.classList.toggle('dark-mode');
-      updateIcon();
+      switchBackgroundClasses(); // Switch background classes
+      updateIcon(); // Update the icon
   
       // Update cookie based on current state
       var mode = document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled';
       setCookie('darkMode', mode, 7); // Save for 7 days, adjust as needed
     });
   });
+  
   
