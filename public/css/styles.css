@@ -169,13 +169,15 @@ body {
   color: #ffffff; /* Light text for readability */
 }
 
-
-/* Additional dark mode styles */
-.dark-mode .container,
-.dark-mode .card,
+.dark-mode .footer,
 .dark-mode .navbar,
-.dark-mode .footer {
-  background-color: #242424; /* Consistent dark background for these elements */
+.dark-mode .bg-dark {
+  background-color: #1a1a1a; /* Slightly lighter dark background for footer and navbar */
+  color: #ffffff;
+}
+
+.dark-mode .card {
+  background-color: #242424; /* Dark background for cards */
   color: #ffffff;
 }
 
@@ -185,5 +187,7 @@ body {
 .dark-mode .contact-info a {
   color: #bbbbbb; /* Lighter text for links and other elements */
 }
+
+/* Adjust additional elements as needed */
 
 
