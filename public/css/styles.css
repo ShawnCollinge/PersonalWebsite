@@ -133,3 +133,9 @@ body {
   max-height: 500px;
   min-width: auto;
 }
+
+.profile-image {
+  max-height: 400px; /* Adjust this value based on your text height */
+  object-fit: cover; /* This makes the image cover the area, adjust as needed */
+  width: 100%; /* This ensures the image is responsive */
+}
