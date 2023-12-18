@@ -27,9 +27,9 @@
   
     // Function to switch background classes
     function switchBackgroundClasses() {
-      document.querySelectorAll('.bg-light, .bg-dark').forEach(el => {
+      document.querySelectorAll('.bg-light, .bg-secondary').forEach(el => {
         el.classList.toggle('bg-light');
-        el.classList.toggle('bg-dark');
+        el.classList.toggle('bg-secondary');
       });
     }
   
