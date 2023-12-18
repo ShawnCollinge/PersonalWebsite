@@ -155,3 +155,34 @@ body {
   text-decoration: underline;
 }
 
+/* Existing styles */
+/* ... (keep your existing CSS here) ... */
+
+/* Dark mode styles */
+.dark-mode {
+  background-color: #121212; /* Dark background */
+  color: #ffffff; /* Light text */
+}
+
+.dark-mode .footer,
+.dark-mode .navbar,
+.dark-mode .bg-dark {
+  background-color: #1a1a1a; /* Slightly lighter dark background for footer and navbar */
+  color: #ffffff;
+}
+
+.dark-mode .card {
+  background-color: #242424; /* Dark background for cards */
+  color: #ffffff;
+}
+
+.dark-mode .nav-link,
+.dark-mode .footer p,
+.dark-mode .card-text,
+.dark-mode .contact-info a {
+  color: #bbbbbb; /* Lighter text for links and other elements */
+}
+
+/* Adjust additional elements as needed */
+
+
