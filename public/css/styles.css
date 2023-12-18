@@ -164,9 +164,10 @@ body {
   color: #ffffff; /* Light text */
 }
 
-.dark-mode .bg-light {
-  background-color: #343a40; /* Darker background for elements with bg-light */
-  color: #ffffff; /* Light text for readability */
+.dark-mode .bg-light, 
+.dark-mode div.bg-light {
+    background-color: #343a40; /* Your desired dark background color */
+    color: #ffffff; /* Appropriate text color for dark mode */
 }
 
 .dark-mode .footer,
