@@ -191,3 +191,24 @@ body {
 /* Adjust additional elements as needed */
 
 
+/* Ensure all cards have the same height */
+.card {
+  height: 100%; /* Makes all cards of equal height */
+  display: flex; /* Enables flexbox */
+  flex-direction: column; /* Stacks card content vertically */
+}
+
+/* Make all images the same height and cover their container */
+.card-img-top {
+  height: 200px; /* Adjust this based on your design needs */
+  object-fit: cover; /* Ensures the image covers the area */
+  width: 100%; /* Ensures the image spans the full width of the card */
+}
+
+/* Make sure card body expands to fill available space */
+.card-body {
+  flex-grow: 1; /* Takes up all available space */
+  display: flex; /* Enables flexbox */
+  flex-direction: column; /* Stacks card body content vertically */
+  justify-content: space-between; /* Distributes space between and around content items */
+}
