@@ -146,12 +146,12 @@ body {
   margin-bottom: 10px;
 }
 
-.fs-4, .contact-info a {
+.fs-4 a, .contact-info a {
   color: #2470dc; 
   text-decoration: none;
 }
 
-.fs-4, .contact-info a:hover {
+.fs-4 a:hover, .contact-info a:hover {
   text-decoration: underline;
 }
 
