@@ -47,6 +47,9 @@
     if (!currentMode) {
       setCookie('darkMode', 'enabled', 7);
       currentMode = 'enabled';
+      document.body.classList.add('dark-mode');
+      switchBackgroundClasses(); 
+      updateIcon(); 
     }
   
     // Apply dark mode based on cookie
