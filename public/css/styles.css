@@ -226,3 +226,12 @@ body {
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   transform: rotate(90deg);
 }
+
+.brand-name {
+  margin-right: 20px; /* Adjust as needed */
+}
+
+/* Alternatively, if targeting the navbar-toggler */
+.navbar-toggler {
+  margin-left: 20px; /* Adjust as needed */
+}
