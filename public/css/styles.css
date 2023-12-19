@@ -187,6 +187,7 @@ body {
 .dark-mode .nav-link,
 .dark-mode .footer p,
 .dark-mode .card-text,
+.dark-mode .home-page a,
 .dark-mode .contact-info a {
   color: #bbbbbb; /* Lighter text for links and other elements */
 }
