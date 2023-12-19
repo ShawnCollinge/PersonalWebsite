@@ -155,6 +155,9 @@ body {
   text-decoration: underline;
 }
 
+.home-page a:visited, .contact-info a:visited {
+  color: #2470dc;  
+}
 /* Existing styles */
 /* ... (keep your existing CSS here) ... */
 
