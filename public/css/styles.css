@@ -206,3 +206,23 @@ body {
   flex-direction: column; /* Stacks card body content vertically */
   justify-content: space-between; /* Distributes space between and around content items */
 }
+
+/* Customize the hamburger icon */
+.navbar-toggler-icon {
+  background-image: url('path-to-your-custom-icon'); /* Optional: Replace with a custom icon */
+}
+
+/* Change color and size */
+.navbar-toggler {
+  border-color: rgba(255,255,255,0.1); /* Change border color */
+}
+
+/* Add a transition effect for the icon if needed */
+.navbar-toggler-icon {
+  transition: transform 0.3s;
+}
+
+/* Rotate icon when navbar is expanded */
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  transform: rotate(90deg);
+}
