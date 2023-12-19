@@ -1,48 +1,67 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const toggle = document.getElementById('dark-mode-toggle');
-  const icon = document.getElementById('dark-mode-icon');
-  let currentMode = getCookie('darkMode');
-
-  // Function to switch background classes
-  function switchBackgroundClasses() {
-    document.querySelectorAll('.bg-light, .bg-custom-dark').forEach(el => {
-      el.classList.toggle('bg-light');
-      el.classList.toggle('bg-custom-dark');
-    });
-  }
-
-  // Function to switch the icon
-  function updateIcon() {
-    if (document.body.classList.contains('dark-mode')) {
-      icon.classList.remove('fa-moon');
-      icon.classList.add('fa-sun');
-    } else {
-      icon.classList.remove('fa-sun');
-      icon.classList.add('fa-moon');
+  // Function to set a cookie
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
     }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
   }
 
-  // Set dark mode as the default if no cookie is set
-  if (!currentMode) {
-    setCookie('darkMode', 'enabled', 7);
-    currentMode = 'enabled';
+  // Function to get a cookie
+  function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
   }
 
-  // Apply dark mode based on cookie or default
-  if (currentMode === 'enabled') {
-    document.body.classList.add('dark-mode');
-    switchBackgroundClasses();
-    updateIcon();
-  }
-
-  toggle.addEventListener('click', function(event) {
-    event.preventDefault();
-    document.body.classList.toggle('dark-mode');
-    switchBackgroundClasses();
-    updateIcon();
-
-    // Update cookie based on current state
-    var mode = document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled';
-    setCookie('darkMode', mode, 7);
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.getElementById('dark-mode-toggle');
+    const icon = document.getElementById('dark-mode-icon');
+    const currentMode = getCookie('darkMode');
+  
+    // Function to switch background classes
+    function switchBackgroundClasses() {
+      document.querySelectorAll('.bg-light, .bg-custom-dark').forEach(el => {
+        el.classList.toggle('bg-light');
+        el.classList.toggle('bg-custom-dark');
+      });
+    }
+  
+    // Function to switch the icon
+    function updateIcon() {
+      if (document.body.classList.contains('dark-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    }
+  
+    // Apply dark mode based on cookie
+    if (!currentMode) {
+      document.body.classList.add('dark-mode');
+      switchBackgroundClasses(); // Switch background classes
+      updateIcon(); // Update the icon
+    }
+  
+    toggle.addEventListener('click', function(event) {
+      event.preventDefault();
+      document.body.classList.toggle('dark-mode');
+      switchBackgroundClasses(); // Switch background classes
+      updateIcon(); // Update the icon
+  
+      // Update cookie based on current state
+      var mode = document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled';
+      setCookie('darkMode', mode, 7); // Save for 7 days, adjust as needed
+    });
   });
-});
+  
+  
