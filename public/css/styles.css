@@ -193,8 +193,8 @@ body {
   height: 100%; /* Keeps all cards of equal height */
   display: flex; /* Enables flexbox */
   flex-direction: column; /* Stacks card content vertically */
-  margin-top: 20px; /* Adds space above the card */
-  margin-bottom: 20px; /* Adds space below the card */
+  margin-top: 40px; /* Adds space above the card */
+  margin-bottom: 40px; /* Adds space below the card */
 }
 
 .card-img-top {
