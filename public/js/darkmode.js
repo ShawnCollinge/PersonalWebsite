@@ -46,7 +46,7 @@
     }
   
     // Apply dark mode based on cookie
-    if (currentMode != 'enabled') {
+    if (!currentMode) {
       document.body.classList.add('dark-mode');
       switchBackgroundClasses(); // Switch background classes
       updateIcon(); // Update the icon
