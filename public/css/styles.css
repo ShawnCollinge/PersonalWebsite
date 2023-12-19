@@ -188,19 +188,16 @@ body {
   color: #bbbbbb; /* Lighter text for links and other elements */
 }
 
-
 .card {
-  height: 100%; /* Keeps all cards of equal height */
+  height: 100%; /* Makes all cards of equal height */
   display: flex; /* Enables flexbox */
   flex-direction: column; /* Stacks card content vertically */
-  margin-top: 40px; /* Adds space above the card */
-  margin-bottom: 40px; /* Adds space below the card */
 }
 
 .card-img-top {
-  height: 200px; /* Fixed height for images */
+  height: 200px; /* Adjust this based on your design needs */
   object-fit: cover; /* Ensures the image covers the area */
-  width: 100%; /* Image spans the full width of the card */
+  width: 100%; /* Ensures the image spans the full width of the card */
 }
 
 .card-body {
