@@ -44,6 +44,11 @@
         icon.classList.add('fa-moon');
       }
     }
+
+    if (!currentMode) {
+      setCookie('darkMode', 'enabled', 7);
+      currentMode = 'enabled';
+    }
   
     // Apply dark mode based on cookie
     if (currentMode === 'enabled') {
