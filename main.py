@@ -6,8 +6,25 @@ lastName = sys.argv[3].lower()
 isMarcel = sys.argv[4]
 matchCode = matchCode.strip()
 
+HEADERS = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:124.0) Gecko/20100101 Firefox/124.0",
+        "Accept": "*/*",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Access-Control-Request-Method": "GET",
+        "Access-Control-Request-Headers": "x-csrf-token",
+        "Referer": "https://practiscore.com/",
+        "Origin": "https://practiscore.com",
+        "Connection": "keep-alive",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "cross-site",
+        "Pragma": "no-cache",
+        "Cache-Control": "no-cache"
+    }
+
 def get_shooterID(matchCode, lastName, firstName):
-    response = requests.get(f"https://s3.amazonaws.com/ps-scores/production/{matchCode}/match_def.json").json()['match_shooters']
+    response = requests.get(f"https://s3.amazonaws.com/ps-scores/production/{matchCode}/match_def.json", headers=HEADERS).json()['match_shooters']
     for shooter in response:
         if shooter['sh_ln'].lower() == lastName and shooter['sh_fn'].lower() == firstName:
             return { 
@@ -50,7 +67,7 @@ def get_stage_info(matchCode, shooter):
 
     shooterClass = shooter['class']
     shooterID = shooter['id']
-    response = requests.get(f'https://s3.amazonaws.com/ps-scores/production/{matchCode}/results.json').json()
+    response = requests.get(f'https://s3.amazonaws.com/ps-scores/production/{matchCode}/results.json', headers=HEADERS).json()
     stageInfo = []
     get_overall_info(response[0]['Match'][0]['Overall'])
     shooter.update(get_div_info(response[0]['Match']))
@@ -111,7 +128,7 @@ def find_scores(matchCode, shooter):
                     test = 0
                 return scores    
 
-    response = requests.get(f"https://s3.amazonaws.com/ps-scores/production/{matchCode}/match_scores.json").json()
+    response = requests.get(f"https://s3.amazonaws.com/ps-scores/production/{matchCode}/match_scores.json", headers=HEADERS).json()
     totalScores = []
     shooterID = shooter['id']
     for stage in response['match_scores']:
