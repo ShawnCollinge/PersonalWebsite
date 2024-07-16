@@ -3,7 +3,7 @@ import requests, sys
 matchCode =  sys.argv[1]
 firstName = sys.argv[2].lower()
 lastName = sys.argv[3].lower()
-isMarcel = sys.argv[4]
+isMarcel = sys.argv[4].lower() == 'true'
 matchCode = matchCode.strip()
 
 HEADERS = {
@@ -173,13 +173,7 @@ def marcel_print(stages, scores, shooter):
         printString += f"{float(stages[i]['hitFactor']):.4f}HF"
         print(printString)
         print(" ")
-    print(f"Overall Time {overallScores['time']}")
-    print(f"{shooter['classPlace']} {shooter['class']} ({shooter['classPercent']}%)")
-    print(f"{shooter['place']} Overall ({shooter['matchPercent']}%)")
     printString = ""
-    for key in overallScores:
-        if overallScores[key] > 0 and key != "time":
-            printString += f"{overallScores[key]}{key} "
     print(printString)
 
 def don_print(stages, scores, shooter):
@@ -235,7 +229,7 @@ shooterInfo = get_shooterID(matchCode, lastName, firstName)
 stagePlace = get_stage_info(matchCode, shooterInfo)
 scores = find_scores(matchCode,shooterInfo)
 
-if isMarcel:
+if isMarcel is True:
     marcel_print(stagePlace, scores, shooterInfo)
 else: 
     don_print(stagePlace, scores, shooterInfo)
