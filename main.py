@@ -182,12 +182,62 @@ def marcel_print(stages, scores, shooter):
             printString += f"{overallScores[key]}{key} "
     print(printString)
 
+def don_print(stages, scores, shooter):
+    overallScores = {
+        'A': 0,
+        'C': 0,
+        'D': 0,
+        'M': 0,
+        "NPM": 0,
+        "NS": 0,
+        "PROC": 0,
+        "time": 0,
+    }
+    for i in range(len(stages)):
+        place = stages[i]['place']
+        shooterClass = shooter['class'] 
+        percent = stages[i]['percent']
+        stage = stages[i]['name']
+        time = scores[i]['time']
+        
+        
+        printString = f"{stage}"
+        
+        for key in scores[i]:
+            overallScores[key] += scores[i][key]
+            if scores[i][key] > 0 and key != "time":
+                printString += f"\n{key}: {scores[i][key]}"
+        
+        printString += f"\nTime: {time}s"
+        
+        printString += f"\nHF: {float(stages[i]['hitFactor']):.4f}"
+        
+        printString += "\n"
+        
+        if place == 1:
+            printString += "Stage Win"
+        elif place % 10 == 1 and place > 20:
+            printString += f"{place}st {shooterClass} {percent}%"
+        elif place % 10 == 2 and (place > 20 or place < 10):
+            printString += f"{place}nd {shooterClass} {percent}%"
+        elif place % 10 == 3 and (place > 20 or place < 10):
+            printString += f"{place}rd {shooterClass} {percent}%"
+        else:
+            printString += f"{place}th {shooterClass} {percent}%"
+        print(printString)
+        print(" ")
+    printString = ""
+    print(printString)
+
 
 shooterInfo = get_shooterID(matchCode, lastName, firstName)
 
 stagePlace = get_stage_info(matchCode, shooterInfo)
 scores = find_scores(matchCode,shooterInfo)
 
-marcel_print(stagePlace, scores, shooterInfo)
+if isMarcel:
+    marcel_print(stagePlace, scores, shooterInfo)
+else: 
+    don_print(stagePlace, scores, shooterInfo)
 
 sys.stdout.flush()
